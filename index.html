@@ -1,0 +1,847 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Tunaiku dashboard – component configurator</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;0,500;0,700;1,700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --c-bg:#EDEFF3;--c-panel:#FFFFFF;--c-ink:#1B2230;--c-muted:#5E6778;--c-line:#D9DDE5;--c-accent:#2A3550;--c-on-accent:#FFFFFF;--c-field:#F4F5F8;--c-on:#2E9E6A;
+  color-scheme:light;box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media(prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){--c-bg:#14171D;--c-panel:#1D222A;--c-ink:#E6E9EF;--c-muted:#9AA3B2;--c-line:#2E3542;--c-accent:#C9D2E3;--c-on-accent:#14171D;--c-field:#252B35;--c-on:#4CC38A;color-scheme:dark}
+}
+:root[data-theme="dark"]{--c-bg:#14171D;--c-panel:#1D222A;--c-ink:#E6E9EF;--c-muted:#9AA3B2;--c-line:#2E3542;--c-accent:#C9D2E3;--c-on-accent:#14171D;--c-field:#252B35;--c-on:#4CC38A;color-scheme:dark}
+*,*::before,*::after{box-sizing:inherit}
+html{height:100%;scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;height:100%;background:var(--c-bg);color:var(--c-ink);font-family:"Plus Jakarta Sans",system-ui,-apple-system,"Segoe UI",sans-serif;font-size:14px;line-height:1.45}
+button,select,input,textarea{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--c-accent);outline-offset:2px}
+
+.app{display:grid;grid-template-columns:270px 1fr 360px;grid-template-areas:"left stage right";height:100%}
+.left{grid-area:left;background:var(--c-panel);border-right:1px solid var(--c-line);overflow-y:auto;padding:20px 16px 40px}
+.right{grid-area:right;background:var(--c-panel);border-left:1px solid var(--c-line);overflow-y:auto;padding:20px 16px 48px}
+.stage{grid-area:stage;display:flex;flex-direction:column;min-width:0;overflow:auto}
+h2{font-size:16px;margin:0 0 2px;letter-spacing:-.01em}
+.lede{color:var(--c-muted);margin:0 0 16px;font-size:13px}
+
+.comp{list-style:none;margin:0;padding:0;display:grid;gap:6px}
+.comp li{display:flex;align-items:center;gap:8px;border:1px solid var(--c-line);border-radius:10px;padding:8px 8px 8px 10px;background:var(--c-panel)}
+.comp li.fixed{background:var(--c-field);color:var(--c-muted)}
+.comp .nm{flex:1;font-weight:600;font-size:13px;line-height:1.3}
+.comp li.off .nm{color:var(--c-muted)}
+.lock{font-size:11px;font-weight:600;border:1px solid var(--c-line);border-radius:6px;padding:2px 6px}
+.sw{position:relative;width:36px;height:22px;flex:none}
+.sw input{position:absolute;inset:0;opacity:0;margin:0;cursor:pointer}
+.sw span{position:absolute;inset:0;border-radius:999px;background:var(--c-line);pointer-events:none;transition:background .15s}
+.sw span::after{content:"";position:absolute;top:3px;left:3px;width:16px;height:16px;border-radius:50%;background:#fff;transition:transform .15s;box-shadow:0 1px 2px rgba(0,0,0,.2)}
+.sw input:checked+span{background:var(--c-on)}
+.sw input:checked+span::after{transform:translateX(14px)}
+.sw input:focus-visible+span{outline:2px solid var(--c-accent);outline-offset:2px}
+.mini{border:1px solid var(--c-line);background:var(--c-panel);border-radius:6px;width:26px;height:26px;cursor:pointer;display:grid;place-items:center;flex:none;font-size:12px}
+.mini:disabled{opacity:.3;cursor:default}
+.note{margin-top:14px;font-size:12px;color:var(--c-muted)}
+.note button{border:0;background:none;padding:0;color:var(--c-ink);text-decoration:underline;cursor:pointer;font-weight:600}
+
+details{border:1px solid var(--c-line);border-radius:10px;margin-bottom:8px;background:var(--c-panel)}
+details[open]{background:var(--c-field)}
+details.flash{box-shadow:0 0 0 2px var(--c-accent)}
+summary{cursor:pointer;padding:10px 12px;font-weight:600;display:flex;align-items:center;gap:8px;list-style:none}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"";margin-left:auto;width:7px;height:7px;border-right:1.5px solid var(--c-muted);border-bottom:1.5px solid var(--c-muted);transform:rotate(45deg);transition:transform .15s}
+details[open] summary::after{transform:rotate(-135deg)}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--c-line);flex:none}
+.dot.on{background:var(--c-on)}
+.sub{font-size:11px;color:var(--c-muted);font-weight:600;margin:6px 0 -2px}
+.fields{padding:2px 12px 12px;display:grid;gap:10px}
+.f{display:grid;grid-template-columns:1fr auto;align-items:center;gap:10px}
+.f.stack{grid-template-columns:1fr;gap:4px}
+.f label{color:var(--c-muted);font-size:13px}
+.f select,.f input[type=text],.f input[type=number],.f input[type=date]{background:var(--c-panel);border:1px solid var(--c-line);border-radius:7px;padding:5px 8px;min-width:130px;max-width:180px}
+.f.stack input[type=text],.f textarea{max-width:none;width:100%}
+.f textarea{background:var(--c-panel);border:1px solid var(--c-line);border-radius:7px;padding:6px 8px;resize:vertical;min-height:58px;line-height:1.4}
+.f input[type=color]{width:44px;height:28px;border:1px solid var(--c-line);border-radius:7px;padding:2px;background:var(--c-panel);cursor:pointer}
+.f .rng{display:flex;align-items:center;gap:8px}
+.f input[type=range]{width:110px;accent-color:var(--c-accent)}
+.f output{font-variant-numeric:tabular-nums;font-size:12px;color:var(--c-muted);min-width:48px;text-align:right}
+.f input[type=checkbox]{width:18px;height:18px;accent-color:var(--c-accent)}
+.help{font-size:11.5px;color:var(--c-muted);margin-top:-4px}
+
+.bar{position:sticky;top:0;z-index:5;display:flex;flex-wrap:wrap;gap:8px;align-items:center;padding:12px 20px;background:var(--c-bg);border-bottom:1px solid var(--c-line)}
+.tb{border:1px solid var(--c-line);background:var(--c-panel);border-radius:9px;padding:7px 12px;cursor:pointer;font-weight:600}
+.tb[aria-pressed=true]{border-color:var(--c-accent);box-shadow:inset 0 0 0 1px var(--c-accent)}
+.bar select{border:1px solid var(--c-line);background:var(--c-panel);border-radius:9px;padding:7px 10px}
+.bar .sp{flex:1}
+.canvas{flex:1;display:grid;place-items:center;padding:28px 16px 48px}
+
+.phone{
+  --pri:#46A000;--brand:#1E7BE0;--bg:#F0F6FD;--tx:#212121;--tx2:#616161;--warn:#FFB35C;--dng:#E8505B;--r:16px;--br:6px;
+  width:min(var(--dev-w),calc(100vw - 32px));height:var(--dev-h);
+  border:10px solid #1A1D24;border-radius:40px;overflow:hidden;position:relative;
+  background:var(--bg);color:var(--tx);font-family:Roboto,system-ui,-apple-system,"Segoe UI",sans-serif;font-size:14px;line-height:1.45;
+  display:flex;flex-direction:column;box-shadow:0 30px 60px -30px rgba(15,20,35,.45);
+}
+.phone *{box-sizing:border-box}
+.ph-status{height:24px;flex:none;background:var(--brand);color:#fff;display:flex;align-items:center;justify-content:flex-end;gap:6px;padding:0 12px;font-size:12px;font-weight:500}
+.ph-top{height:56px;flex:none;background:#fff;display:flex;align-items:center;padding:0 16px;box-shadow:0 2px 4px rgba(0,0,0,.12);position:relative;z-index:2}
+.logo{display:flex;align-items:center;gap:6px;font:italic 700 22px/1 Roboto,sans-serif;letter-spacing:-.01em}
+.logo .g{color:#8DBE3F}.logo .b{color:#3E78C2}
+.ph-scroll{flex:1;overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:16px}
+.ph-nav{flex:none;display:flex;background:#fff;box-shadow:0 -1px 4px rgba(0,0,0,.08);padding:8px 0 10px;position:relative;z-index:2}
+.ph-nav div{flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;font-size:11px;color:#757575}
+.ph-nav div.on{color:var(--brand)}
+.ph-nav svg{width:22px;height:22px}
+.el{position:relative}
+.inspect .el{cursor:pointer}
+.inspect .el:hover{outline:2px dashed var(--brand);outline-offset:3px;border-radius:var(--r)}
+.inspect .el:hover::before{content:attr(data-name);position:absolute;top:-6px;right:6px;transform:translateY(-100%);font:600 10px/1 "Plus Jakarta Sans",sans-serif;background:var(--brand);color:#fff;padding:3px 6px;border-radius:4px;z-index:3}
+.empty-ph{margin:auto;color:var(--tx2);text-align:center;font-size:13px;padding:24px}
+
+.card{background:#fff;border-radius:var(--r);box-shadow:0 1px 5px rgba(0,0,0,.14);padding:16px}
+.c-title{font-weight:700;font-size:15px;margin:0 0 4px;color:var(--tx)}
+.c-body{color:var(--tx2);font-size:13px;letter-spacing:.01em;margin:0}
+.btn{font:500 14px/1 Roboto,sans-serif;letter-spacing:.07em;border-radius:var(--br);cursor:pointer;height:36px;padding:0 16px;border:1.5px solid transparent;background:none;color:var(--pri)}
+.btn.text{padding:0 8px}
+.btn.outline{border-color:var(--pri)}
+.btn.filled{background:var(--pri);color:#fff;height:44px;width:100%;font-weight:500}
+.btn.filled:disabled{background:#D5DAE0;color:#8A939E;cursor:not-allowed}
+.btn.link{padding:0;height:auto}
+
+/* hope card */
+.hope{display:flex;align-items:center;gap:14px}
+.hope-img{width:56px;height:56px;border-radius:14px;flex:none;object-fit:contain;background:#E8F5E2}
+.hope-txt .c-title{font-size:14px;margin-bottom:2px}
+.hope-txt .c-body{font-size:12px;line-height:1.4}
+
+/* action steps */
+.act-list{display:flex;flex-direction:column;gap:0}
+.act-item{display:flex;align-items:center;gap:10px;padding:12px 0;border-bottom:1px solid #EEF0F4}
+.act-item:last-child{border-bottom:none;padding-bottom:0}
+.act-item:first-child{padding-top:4px}
+.act-ic{width:34px;height:34px;border-radius:10px;flex:none;display:grid;place-items:center;font-size:16px}
+.act-ic.profile{background:#E8F0FE;color:var(--brand)}
+.act-ic.reminder{background:#FFF3E0;color:#F59E0B}
+.act-ic.device{background:#E8F5E2;color:var(--pri)}
+.act-label{flex:1;font-size:13px;font-weight:500;color:var(--tx)}
+.act-check{width:20px;height:20px;border-radius:50%;border:2px solid #D1D5DB;flex:none;display:grid;place-items:center}
+.act-check.done{border-color:var(--pri);background:var(--pri);color:#fff}
+.act-toggle{position:relative;width:34px;height:20px;border-radius:999px;background:#D1D5DB;flex:none;cursor:pointer}
+.act-toggle.on{background:var(--pri)}
+.act-toggle::after{content:"";position:absolute;top:2px;left:2px;width:16px;height:16px;border-radius:50%;background:#fff;transition:transform .15s;box-shadow:0 1px 2px rgba(0,0,0,.15)}
+.act-toggle.on::after{transform:translateX(14px)}
+.act-arrow{color:#9CA3AF;flex:none;font-size:14px}
+
+/* literacy */
+.lit-card{padding:14px}
+.lit-img{width:100%;height:100px;border-radius:10px;background:linear-gradient(135deg,#E0F2E9 0%,#D4ECFA 100%);margin-bottom:10px;display:grid;place-items:center;color:var(--pri);font-size:28px}
+.lit-tag{font-size:11px;color:var(--brand);font-weight:600;margin-bottom:4px}
+
+/* score */
+.score-wrap{text-align:center;padding:16px 16px 12px}
+.score-ring{position:relative;width:100px;height:100px;margin:0 auto 10px}
+.score-ring svg{width:100px;height:100px;transform:rotate(-90deg)}
+.score-ring .bg{fill:none;stroke:#E5E7EB;stroke-width:8}
+.score-ring .fg{fill:none;stroke:var(--pri);stroke-width:8;stroke-linecap:round;transition:stroke-dashoffset .4s}
+.score-val{position:absolute;inset:0;display:grid;place-items:center;font-size:28px;font-weight:700;color:var(--tx);font-variant-numeric:tabular-nums}
+.score-label{font-size:13px;color:var(--tx2);margin-bottom:2px}
+.score-status{font-size:12px;font-weight:600;border-radius:999px;padding:2px 10px;display:inline-block}
+.score-status.good{background:#E8F5E2;color:var(--pri)}
+.score-status.fair{background:#FFF3E0;color:#F59E0B}
+.score-status.poor{background:#FEE2E2;color:#E8505B}
+.score-prog{margin-top:14px;text-align:left}
+.score-prog-title{font-size:12px;font-weight:600;color:var(--tx);margin-bottom:6px}
+.prog-bar{height:6px;border-radius:3px;background:#E5E7EB;overflow:hidden;margin-bottom:4px}
+.prog-fill{height:100%;border-radius:3px;background:var(--pri);transition:width .3s}
+.prog-label{display:flex;justify-content:space-between;font-size:11px;color:var(--tx2)}
+
+/* referral */
+.ref-card{padding:16px}
+.ref-top{display:flex;align-items:center;gap:10px;margin-bottom:6px}
+.ref-ic{width:40px;height:40px;border-radius:12px;background:#E8F0FE;display:grid;place-items:center;flex:none}
+.ref-ic svg{width:22px;height:22px}
+.ref-info{display:flex;align-items:center}
+.ref-partner{font-weight:700;font-size:14px;color:var(--tx)}
+
+/* rejection */
+.rej-card{padding:16px}
+.rej-header{display:flex;align-items:center;gap:8px;margin-bottom:6px}
+.rej-warn-ic{font-size:20px;flex:none;line-height:1}
+.rej-reason{background:#FEF2F2;border-radius:8px;padding:10px 12px;font-size:13px;color:#B91C1C;margin-bottom:12px;line-height:1.45}
+.rej-acts{display:flex;flex-direction:column;gap:10px}
+.rej-act{display:flex;align-items:flex-start;gap:10px}
+.rej-act .act-check{margin-top:2px}
+.rej-act-txt{display:flex;flex-direction:column;gap:1px}
+.rej-act-label{font-size:13px;font-weight:600;color:var(--tx)}
+.rej-act-desc{font-size:12px;color:var(--tx2);line-height:1.4}
+
+/* risk profile */
+.rp-card{padding:16px}
+.rp-rows{display:flex;flex-direction:column;gap:0;margin-top:8px}
+.rp-row{display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid #EEF0F4}
+.rp-row:last-child{border-bottom:none;padding-bottom:0}
+.rp-row-left{flex:1;display:flex;flex-direction:column;gap:1px}
+.rp-label{font-size:13px;font-weight:600;color:var(--tx)}
+.rp-desc{font-size:11.5px;color:var(--tx2);line-height:1.35}
+.rp-badge{font-size:11px;font-weight:600;border-radius:999px;padding:3px 10px;flex:none;white-space:nowrap}
+
+/* locked limit */
+.ll-card{padding:16px}
+.ll-top{display:flex;align-items:center;gap:12px;margin-bottom:8px}
+.ll-lock-ic{font-size:28px;flex:none;line-height:1}
+.ll-label{font-size:13px;color:var(--tx2);display:flex;align-items:center}
+.ll-amt{font-size:24px;font-weight:700;color:var(--tx);font-variant-numeric:tabular-nums;letter-spacing:-.01em}
+.ll-reason{background:#FFF3E0;border-radius:8px;padding:10px 12px;font-size:13px;color:#92400E;margin-bottom:8px;line-height:1.45}
+.ll-date{font-size:12px;color:var(--tx2);margin-top:4px}
+.ll-date b{color:var(--tx)}
+
+/* in-phone page view */
+.pg-header{display:flex;align-items:center;gap:10px;padding:12px 16px;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.1);position:sticky;top:0;z-index:3}
+.pg-back{width:32px;height:32px;border-radius:50%;border:none;background:var(--bg);display:grid;place-items:center;cursor:pointer;flex:none;font-size:16px;color:var(--tx)}
+.pg-title{font-size:15px;font-weight:700;color:var(--tx);flex:1}
+.pg-body{padding:16px;display:flex;flex-direction:column;gap:16px}
+
+/* profile page fields */
+.pf-field{display:flex;flex-direction:column;gap:3px}
+.pf-label{font-size:12px;color:var(--tx2);font-weight:500}
+.pf-val{font-size:14px;color:var(--tx);background:#fff;border:1px solid #E5E7EB;border-radius:8px;padding:10px 12px}
+.pf-val.empty{color:var(--dng);border-color:#FECACA;background:#FEF2F2}
+.pf-val.ok{border-color:#BBF7D0;background:#F0FDF4}
+.pf-section{font-size:13px;font-weight:700;color:var(--tx);margin-top:4px}
+
+/* permission page */
+.perm-row{display:flex;align-items:center;gap:12px;padding:12px;background:#fff;border-radius:10px}
+.perm-ic{width:36px;height:36px;border-radius:10px;display:grid;place-items:center;font-size:18px;flex:none}
+.perm-ic.allow{background:#E8F5E2;color:var(--pri)}
+.perm-ic.deny{background:#FEE2E2;color:var(--dng)}
+.perm-info{flex:1}
+.perm-name{font-size:14px;font-weight:600;color:var(--tx)}
+.perm-status{font-size:12px}
+.perm-status.allow{color:var(--pri)}
+.perm-status.deny{color:var(--dng)}
+.perm-badge{font-size:11px;font-weight:600;border-radius:999px;padding:3px 10px;flex:none}
+.perm-badge.allow{background:#E8F5E2;color:var(--pri)}
+.perm-badge.deny{background:#FEE2E2;color:var(--dng)}
+
+/* stepper article page */
+.step-item{display:flex;gap:12px;position:relative}
+.step-num{width:28px;height:28px;border-radius:50%;background:var(--brand);color:#fff;font-size:13px;font-weight:700;display:grid;place-items:center;flex:none;z-index:1}
+.step-line{position:absolute;left:13px;top:28px;bottom:0;width:2px;background:#E5E7EB}
+.step-item:last-child .step-line{display:none}
+.step-content{flex:1;padding-bottom:20px}
+.step-content h4{margin:0 0 4px;font-size:14px;font-weight:600;color:var(--tx)}
+.step-content p{margin:0;font-size:13px;color:var(--tx2);line-height:1.5}
+.step-img{width:100%;height:80px;border-radius:8px;margin-top:8px;display:grid;place-items:center;font-size:24px}
+
+/* risk profile detail page */
+.rpd-illus{width:100%;height:100px;border-radius:12px;background:linear-gradient(135deg,#FFF3E0 0%,#FEE2E2 50%,#E8F5E2 100%);display:grid;place-items:center;font-size:36px;margin-bottom:12px}
+.rpd-card{background:#fff;border-radius:12px;padding:14px;margin-bottom:10px}
+.rpd-card h4{margin:0 0 4px;font-size:14px;font-weight:600}
+.rpd-card p{margin:0;font-size:13px;color:var(--tx2);line-height:1.5}
+
+/* locked limit tips dialog */
+.tips-list{text-align:left;margin:12px 0}
+.tips-item{display:flex;align-items:flex-start;gap:8px;padding:8px 0;border-bottom:1px solid #EEF0F4}
+.tips-item:last-child{border-bottom:none}
+.tips-ic{font-size:16px;flex:none;margin-top:1px}
+.tips-txt{font-size:13px;color:var(--tx2);line-height:1.45}
+
+/* referral standout */
+.ref-card.standout{background:linear-gradient(135deg,#E8F0FE 0%,#DBEAFE 100%);border:1.5px solid #93C5FD;box-shadow:0 2px 8px rgba(30,123,224,.18)}
+.ref-amt{font-size:22px;font-weight:700;color:var(--brand);margin:6px 0 2px;font-variant-numeric:tabular-nums}
+.ref-rate{font-size:13px;color:var(--tx2);margin-bottom:8px}
+
+/* risk profile illustration */
+.rp-illus{width:100%;height:80px;border-radius:10px;background:linear-gradient(135deg,#FFF3E0 0%,#FEE2E2 50%,#E8F5E2 100%);margin-bottom:8px;display:grid;place-items:center;font-size:32px}
+
+/* loan slider */
+.ln-row{display:flex;justify-content:space-between;align-items:baseline;margin-top:14px}
+.ln-row span{color:var(--tx2);font-size:13px}
+.ln-row b{font-size:16px;font-variant-numeric:tabular-nums}
+.ln-mm{display:flex;justify-content:space-between;font-size:11px;color:#9AA1A9;margin-top:-2px}
+.rng{-webkit-appearance:none;appearance:none;width:100%;height:28px;background:transparent;margin:2px 0 0;cursor:pointer}
+.rng::-webkit-slider-runnable-track{height:6px;border-radius:3px;background:linear-gradient(to right,var(--pri) var(--pct),#DDE5EE var(--pct))}
+.rng::-webkit-slider-thumb{-webkit-appearance:none;width:22px;height:22px;border-radius:50%;background:#fff;border:3px solid var(--pri);margin-top:-8px;box-shadow:0 1px 3px rgba(0,0,0,.25)}
+.rng::-moz-range-track{height:6px;border-radius:3px;background:#DDE5EE}
+.rng::-moz-range-progress{height:6px;border-radius:3px;background:var(--pri)}
+.rng::-moz-range-thumb{width:16px;height:16px;border-radius:50%;background:#fff;border:3px solid var(--pri)}
+.rng:focus-visible{outline:2px solid var(--brand);outline-offset:2px;border-radius:4px}
+.inst{margin-top:16px;padding:12px;border-radius:12px;background:color-mix(in srgb,var(--pri) 8%,#fff)}
+.inst-top{display:flex;justify-content:space-between;align-items:baseline}
+.inst-top span{font-size:13px;color:var(--tx2)}
+.inst-top b{font-size:20px;color:var(--pri);font-variant-numeric:tabular-nums}
+.inst dl{margin:8px 0 0;display:grid;grid-template-columns:1fr auto;gap:4px 8px;font-size:12px;color:var(--tx2)}
+.inst dd{margin:0;text-align:right;font-variant-numeric:tabular-nums;color:var(--tx)}
+.ln-cta{margin-top:16px}
+.ln-dis{font-size:12px;color:var(--tx2);margin:8px 0 0;text-align:center}
+
+/* preapproved */
+.pre-lbl{font-size:13px;color:var(--tx2);display:flex;align-items:center;gap:6px}
+.pre-amt{font-size:26px;font-weight:700;color:var(--tx);margin:4px 0 2px;font-variant-numeric:tabular-nums;letter-spacing:-.01em}
+.pre .c-body{margin-bottom:16px}
+.chip-ok{font-size:11px;font-weight:500;color:var(--pri);background:color-mix(in srgb,var(--pri) 12%,#fff);border-radius:999px;padding:2px 8px}
+
+.ovl{position:absolute;inset:0;background:rgba(0,0,0,.45);display:grid;place-items:center;padding:24px;z-index:10}
+.mdl{background:#fff;border-radius:var(--r);padding:24px 20px 16px;text-align:center;width:100%;max-width:300px}
+.mdl-ic{width:56px;height:56px;border-radius:50%;margin:0 auto 12px;display:grid;place-items:center;background:color-mix(in srgb,var(--brand) 12%,#fff);color:var(--brand)}
+.mdl p{margin:6px 0 18px;color:var(--tx2);font-size:14px}
+.mdl p.c-title{color:var(--tx);font-size:16px;margin:0}
+.mdl b{color:var(--tx)}
+.toast{position:absolute;left:16px;right:16px;bottom:76px;background:#323232;color:#fff;font-size:13px;padding:10px 14px;border-radius:6px;z-index:9}
+
+dialog{border:1px solid var(--c-line);border-radius:14px;background:var(--c-panel);color:var(--c-ink);width:min(560px,calc(100vw - 32px));padding:18px}
+dialog::backdrop{background:rgba(10,14,22,.45)}
+dialog h3{margin:0 0 4px;font-size:16px}
+dialog p{margin:0 0 10px;color:var(--c-muted);font-size:13px}
+dialog textarea{width:100%;height:320px;background:var(--c-field);border:1px solid var(--c-line);border-radius:8px;padding:10px;font:12px/1.5 ui-monospace,SFMono-Regular,Menlo,monospace;resize:vertical}
+.dlg-a{display:flex;gap:8px;justify-content:flex-end;margin-top:10px}
+.dlg-a .pri{background:var(--c-accent);color:var(--c-on-accent);border-color:var(--c-accent)}
+.err{color:#C62E3A;font-size:12px;min-height:16px}
+
+@media(max-width:1180px){
+  html,body{height:auto}
+  .app{grid-template-columns:260px 1fr;grid-template-areas:"left stage" "left right";height:auto;min-height:100%}
+  .right{border-left:0;border-top:1px solid var(--c-line);overflow:visible}
+  .left{overflow:visible}
+  .left>div{position:sticky;top:16px}
+  .stage{overflow:visible}
+  .bar{top:env(safe-area-inset-top,0px)}
+}
+@media(max-width:760px){
+  .app{grid-template-columns:1fr;grid-template-areas:"stage" "left" "right"}
+  .left{border-right:0;border-top:1px solid var(--c-line)}
+  .left>div{position:static}
+}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<div class="app">
+  <aside class="left" aria-label="Components"><div id="left"></div></aside>
+  <main class="stage">
+    <div class="bar">
+      <select id="device" aria-label="Device size">
+        <option value="360x640">Small · 360×640</option>
+        <option value="360x760" selected>Standard · 360×760</option>
+        <option value="412x860">Large · 412×860</option>
+      </select>
+      <button class="tb" id="inspect" aria-pressed="false" title="Click a component on the phone to open its settings">Inspect</button>
+      <span class="sp"></span>
+      <button class="tb" id="exportBtn">Config JSON</button>
+      <button class="tb" id="resetBtn">Reset</button>
+    </div>
+    <div class="canvas"><div class="phone" id="phone"></div></div>
+  </main>
+  <aside class="right" aria-label="Element settings" id="right"></aside>
+</div>
+
+<dialog id="dlg">
+  <h3>Config JSON</h3>
+  <p>Copy to save this setup, or paste a config and apply.</p>
+  <textarea id="json" spellcheck="false"></textarea>
+  <div class="err" id="jsonErr"></div>
+  <div class="dlg-a">
+    <button class="tb" id="copyJson">Copy</button>
+    <button class="tb pri" id="applyJson">Apply</button>
+    <button class="tb" id="closeDlg">Close</button>
+  </div>
+</dialog>
+
+<script>
+const DEFAULTS = {
+  order:["hope","actions","literacy","score","referral","rejection","riskprofile","lockedlimit","slider","preapproved"],
+  show:{hope:true, actions:true, literacy:true, score:true, referral:false, rejection:false, riskprofile:false, lockedlimit:false, slider:false, preapproved:false},
+  theme:{primary:"#46A000", brand:"#1E7BE0", background:"#F0F6FD", text:"#212121", muted:"#616161", warning:"#FFB35C", cardRadius:16, buttonRadius:6},
+  hope:{title:"Masih ada kesempatan untukmu", body:"Profil kredit kamu belum memenuhi kriteria saat ini.", image:"assets/hope.svg"},
+  actions:{title:"Langkah selanjutnya",
+    step1Label:"Lengkapi Profil", step1Type:"link", step1Done:false,
+    step2Label:"Working Reminder", step2Type:"toggle", step2On:false,
+    step3Label:"Allow Device Data Permission", step3Type:"link", step3Done:false},
+  literacy:{tag:"Tips Keuangan", title:"Cara Meningkatkan Skor Kreditmu", body:"Pelajari langkah-langkah sederhana untuk memperbaiki profil kreditmu.", cta:"Baca Selengkapnya"},
+  score:{value:580, maxValue:850, label:"Skor Kredit", statusGoodMin:700, statusFairMin:550,
+    progressTitle:"Progres Peningkatan Skor", progressValue:65, progressLabel:"65% menuju target"},
+  referral:{partner:"Adakami", badge:"Partner", title:"Rekomendasi untukmu",
+    body:"Kamu juga bisa mengajukan pinjaman di Adakami, platform terpercaya partner kami.",
+    amount:8000000, rate:"2",
+    cta:"Lihat di Adakami", url:"https://www.adakami.id"},
+  rejection:{title:"Pengajuanmu belum disetujui",
+    reason:"Skor kredit belum memenuhi syarat minimum.",
+    act1Label:"Lengkapi data profil", act1Desc:"Pastikan semua data diri terisi lengkap dan benar.", act1Done:false,
+    act2Label:"Tingkatkan skor kredit", act2Desc:"Bayar tagihan tepat waktu dan kurangi utang aktif.", act2Done:false,
+    act3Label:"Tunggu 30 hari", act3Desc:"Kamu bisa mengajukan ulang setelah 30 hari dari penolakan.", act3Done:false,
+    cta:"Perbaiki Sekarang"},
+  riskprofile:{title:"Profil Risiko Kamu",
+    r1Label:"Risiko kredit", r1Desc:"Tidak memiliki riwayat kredit atau riwayat kredit sebelumnya kurang baik.", r1Level:"high",
+    r2Label:"Risiko pengajuan", r2Desc:"Penghasilan belum mencukupi atau tidak memiliki pekerjaan tetap.", r2Level:"medium",
+    r3Label:"Risiko utang", r3Desc:"Jumlah utang melebihi penghasilan.", r3Level:"low",
+    r4Label:"Risiko gagal bayar", r4Desc:"Data yang diisi salah atau belum lengkap.", r4Level:"medium",
+    r5Label:"Risiko perilaku", r5Desc:"Mengajukan pinjaman di banyak tempat.", r5Level:"low"},
+  lockedlimit:{label:"Limit Terkunci", badge:"Segera tersedia",
+    amount:10000000,
+    body:"Kamu sudah memiliki limit, tapi belum bisa digunakan saat ini. Perbaiki data untuk membuka limitmu.",
+    reason:"Verifikasi data belum lengkap.",
+    reapplyDate:"2026-11-15",
+    cta:"Buka Limit Saya"},
+  slider:{title:"Ajukan pinjaman lagi", amountLabel:"Jumlah pinjaman", minAmt:2, maxAmt:30, stepAmt:0.5, defAmt:10,
+    tenorLabel:"Lama pinjaman", minTen:6, maxTen:30, stepTen:1, defTen:12, rate:3, showBreakdown:true,
+    ctaLabel:"Ajukan Pinjaman Lagi", ctaEnabled:true, disabledNote:"Perbaharui datamu dulu untuk mengajukan pinjaman lagi."},
+  preapproved:{label:"Limit pra-disetujui", badge:"Khusus kamu", amount:15000000, body:"Ajukan tanpa isi ulang data. Limit berlaku untuk pengajuan berikutnya.",
+    cta:"Ajukan Sekarang", date:"2026-11-26", modalTitle:"Belum bisa mengajukan", modalBtn:"Mengerti"}
+};
+const NAMES = {hope:"Hope card", actions:"Grouped Action Step", literacy:"Financial Literacy", score:"Score & Progress",
+  referral:"Rekomendasi Pinjaman Lain", rejection:"Rejection Reason",
+  riskprofile:"Risk Profile", lockedlimit:"Locked Limit",
+  slider:"Loan slider", preapproved:"Preapproved limit"};
+
+const SCHEMA = {
+  theme:{n:"Theme (shared)",f:[
+    {p:"theme.primary",l:"Primary (green)",t:"color"},{p:"theme.brand",l:"Brand (blue)",t:"color"},
+    {p:"theme.background",l:"Background",t:"color"},{p:"theme.text",l:"Text",t:"color"},
+    {p:"theme.muted",l:"Text muted",t:"color"},{p:"theme.warning",l:"Warning accent",t:"color"},
+    {p:"theme.cardRadius",l:"Card radius",t:"range",min:0,max:28,u:"px"},
+    {p:"theme.buttonRadius",l:"Button radius",t:"range",min:0,max:24,u:"px"}]},
+  hope:{n:NAMES.hope,f:[
+    {p:"hope.title",l:"Title",t:"text"},{p:"hope.body",l:"Body",t:"area"},
+    {p:"hope.image",l:"Image path",t:"text"},
+    {h:"Relative to HTML file. Default: assets/hope.svg"}]},
+  actions:{n:NAMES.actions,f:[
+    {p:"actions.title",l:"Section title",t:"text"},
+    {s:"Step 1 – Lengkapi Profil"},
+    {p:"actions.step1Label",l:"Label",t:"text"},
+    {p:"actions.step1Type",l:"Type",t:"select",o:["link","toggle"]},
+    {p:"actions.step1Done",l:"Completed",t:"bool"},
+    {s:"Step 2 – Working Reminder"},
+    {p:"actions.step2Label",l:"Label",t:"text"},
+    {p:"actions.step2Type",l:"Type",t:"select",o:["toggle","link"]},
+    {p:"actions.step2On",l:"Toggle on",t:"bool"},
+    {s:"Step 3 – Device Data"},
+    {p:"actions.step3Label",l:"Label",t:"text"},
+    {p:"actions.step3Type",l:"Type",t:"select",o:["link","toggle"]},
+    {p:"actions.step3Done",l:"Completed",t:"bool"}]},
+  literacy:{n:NAMES.literacy,f:[
+    {p:"literacy.tag",l:"Tag label",t:"text"},
+    {p:"literacy.title",l:"Title",t:"text"},
+    {p:"literacy.body",l:"Body",t:"area"},
+    {p:"literacy.cta",l:"CTA label",t:"text"}]},
+  score:{n:NAMES.score,f:[
+    {p:"score.value",l:"Score value",t:"num",min:0,max:850,step:1},
+    {p:"score.maxValue",l:"Max score",t:"num",min:100,max:1000,step:50},
+    {p:"score.label",l:"Label",t:"text"},
+    {s:"Status thresholds"},
+    {p:"score.statusGoodMin",l:"Good (green) min",t:"num",min:0,max:850,step:10},
+    {p:"score.statusFairMin",l:"Fair (yellow) min",t:"num",min:0,max:850,step:10},
+    {h:"Below fair min = Poor (red)"},
+    {s:"Progress bar"},
+    {p:"score.progressTitle",l:"Title",t:"text"},
+    {p:"score.progressValue",l:"Progress %",t:"range",min:0,max:100,u:"%"},
+    {p:"score.progressLabel",l:"Label text",t:"text"}]},
+  referral:{n:NAMES.referral,f:[
+    {p:"referral.partner",l:"Partner name",t:"text"},
+    {p:"referral.badge",l:"Badge label",t:"text"},
+    {p:"referral.title",l:"Title",t:"text"},
+    {p:"referral.body",l:"Body",t:"area"},
+    {p:"referral.amount",l:"Disbursable amount (Rp)",t:"num",min:0,max:500000000,step:500000},
+    {p:"referral.rate",l:"Rate % per month",t:"text"},
+    {p:"referral.cta",l:"CTA label",t:"text"},
+    {p:"referral.url",l:"URL",t:"text"},
+    {h:"Link opened on CTA tap (prototype toast)."}]},
+  rejection:{n:NAMES.rejection,f:[
+    {p:"rejection.title",l:"Title",t:"text"},
+    {p:"rejection.reason",l:"Rejection reason",t:"area"},
+    {s:"Action 1"},
+    {p:"rejection.act1Label",l:"Label",t:"text"},
+    {p:"rejection.act1Desc",l:"Description",t:"text"},
+    {p:"rejection.act1Done",l:"Done",t:"bool"},
+    {s:"Action 2"},
+    {p:"rejection.act2Label",l:"Label",t:"text"},
+    {p:"rejection.act2Desc",l:"Description",t:"text"},
+    {p:"rejection.act2Done",l:"Done",t:"bool"},
+    {s:"Action 3"},
+    {p:"rejection.act3Label",l:"Label",t:"text"},
+    {p:"rejection.act3Desc",l:"Description",t:"text"},
+    {p:"rejection.act3Done",l:"Done",t:"bool"},
+    {s:"CTA"},
+    {p:"rejection.cta",l:"CTA label",t:"text"}]},
+  riskprofile:{n:NAMES.riskprofile,f:[
+    {p:"riskprofile.title",l:"Title",t:"text"},
+    {s:"Risiko kredit"},
+    {p:"riskprofile.r1Label",l:"Label",t:"text"},
+    {p:"riskprofile.r1Desc",l:"Description",t:"text"},
+    {p:"riskprofile.r1Level",l:"Level",t:"select",o:["high","medium","low"]},
+    {s:"Risiko pengajuan"},
+    {p:"riskprofile.r2Label",l:"Label",t:"text"},
+    {p:"riskprofile.r2Desc",l:"Description",t:"text"},
+    {p:"riskprofile.r2Level",l:"Level",t:"select",o:["high","medium","low"]},
+    {s:"Risiko utang"},
+    {p:"riskprofile.r3Label",l:"Label",t:"text"},
+    {p:"riskprofile.r3Desc",l:"Description",t:"text"},
+    {p:"riskprofile.r3Level",l:"Level",t:"select",o:["high","medium","low"]},
+    {s:"Risiko gagal bayar"},
+    {p:"riskprofile.r4Label",l:"Label",t:"text"},
+    {p:"riskprofile.r4Desc",l:"Description",t:"text"},
+    {p:"riskprofile.r4Level",l:"Level",t:"select",o:["high","medium","low"]},
+    {s:"Risiko perilaku"},
+    {p:"riskprofile.r5Label",l:"Label",t:"text"},
+    {p:"riskprofile.r5Desc",l:"Description",t:"text"},
+    {p:"riskprofile.r5Level",l:"Level",t:"select",o:["high","medium","low"]}]},
+  lockedlimit:{n:NAMES.lockedlimit,f:[
+    {p:"lockedlimit.label",l:"Label",t:"text"},
+    {p:"lockedlimit.badge",l:"Badge (empty = hide)",t:"text"},
+    {p:"lockedlimit.amount",l:"Locked amount (Rp)",t:"num",min:0,max:500000000,step:500000},
+    {p:"lockedlimit.body",l:"Body",t:"area"},
+    {p:"lockedlimit.reason",l:"Lock reason",t:"area"},
+    {p:"lockedlimit.reapplyDate",l:"Available date",t:"date"},
+    {p:"lockedlimit.cta",l:"CTA label",t:"text"}]},
+  slider:{n:NAMES.slider,f:[
+    {p:"slider.title",l:"Title",t:"text"},
+    {s:"Jumlah pinjaman (juta)"},
+    {p:"slider.amountLabel",l:"Label",t:"text"},
+    {p:"slider.minAmt",l:"Min",t:"num",min:0.5,max:100,step:0.5,u:" jt"},
+    {p:"slider.maxAmt",l:"Max",t:"num",min:1,max:200,step:0.5,u:" jt"},
+    {p:"slider.stepAmt",l:"Step",t:"select",o:[0.1,0.25,0.5,1,2]},
+    {p:"slider.defAmt",l:"Default",t:"num",min:0.5,max:200,step:0.5,u:" jt"},
+    {s:"Lama pinjaman (bulan)"},
+    {p:"slider.tenorLabel",l:"Label",t:"text"},
+    {p:"slider.minTen",l:"Min",t:"num",min:1,max:60,step:1},
+    {p:"slider.maxTen",l:"Max",t:"num",min:2,max:60,step:1},
+    {p:"slider.stepTen",l:"Step",t:"select",o:[1,3,6]},
+    {p:"slider.defTen",l:"Default",t:"num",min:1,max:60,step:1},
+    {s:"Cicilan per bulan"},
+    {p:"slider.rate",l:"Interest / month (flat)",t:"range",min:0,max:6,step:0.1,u:"%"},
+    {h:"Placeholder rate. Replace with real pricing."},
+    {p:"slider.showBreakdown",l:"Show breakdown",t:"bool"},
+    {s:"CTA"},
+    {p:"slider.ctaLabel",l:"Label",t:"text"},
+    {p:"slider.ctaEnabled",l:"Enabled",t:"bool"},
+    {p:"slider.disabledNote",l:"Note when disabled",t:"area"}]},
+  preapproved:{n:NAMES.preapproved,f:[
+    {p:"preapproved.label",l:"Label",t:"text"},{p:"preapproved.badge",l:"Badge (empty = hide)",t:"text"},
+    {p:"preapproved.amount",l:"Limit (Rp)",t:"num",min:0,max:500000000,step:500000},
+    {p:"preapproved.body",l:"Body",t:"area"},{p:"preapproved.cta",l:"CTA label",t:"text"},
+    {s:"Modal on CTA tap"},
+    {p:"preapproved.date",l:"Reapply date",t:"date"},
+    {p:"preapproved.modalTitle",l:"Modal title",t:"text"},
+    {p:"preapproved.modalBtn",l:"Modal button",t:"text"}]}
+};
+
+const KEY="tunaiku-dash-config-v5";
+const clone=o=>JSON.parse(JSON.stringify(o));
+function merge(base,over){
+  if(Array.isArray(base)) return Array.isArray(over)?over.filter(x=>base.includes(x)).concat(base.filter(x=>!over.includes(x))):base;
+  if(typeof base!=="object"||base===null) return (over===undefined||typeof over!==typeof base)?base:over;
+  const out={}; for(const k in base) out[k]=merge(base[k],over?over[k]:undefined); return out;
+}
+function load(){ try{ const s=localStorage.getItem(KEY); return s?merge(DEFAULTS,JSON.parse(s)):clone(DEFAULTS);}catch(e){return clone(DEFAULTS);} }
+function save(){ try{ localStorage.setItem(KEY,JSON.stringify(cfg)); }catch(e){} }
+const get=(o,p)=>p.split(".").reduce((a,k)=>a?.[k],o);
+function set(o,p,v){ const ks=p.split("."), last=ks.pop(); ks.reduce((a,k)=>a[k],o)[last]=v; }
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+
+let cfg=load();
+const ui={amt:null,ten:null,modal:false,tips:false,inspect:false,toast:"",page:""};
+
+const rp=n=>"Rp"+Math.round(n).toLocaleString("id-ID");
+const jt=x=>"Rp"+(+x).toLocaleString("id-ID",{maximumFractionDigits:2})+" jt";
+const ddmmyyyy=d=>{ const m=/^(\d{4})-(\d{2})-(\d{2})$/.exec(d||""); return m?m[3]+"-"+m[2]+"-"+m[1]:"dd-mm-yyyy"; };
+const pct=(v,min,max)=>max>min?((v-min)/(max-min)*100).toFixed(2)+"%":"0%";
+function range(min,max,step){ min=+min; max=+max; step=+step||1; if(max<=min) max=min+step; return {min,max,step}; }
+const snap=(v,r)=>{ v=Math.min(Math.max(+v,r.min),r.max); return +(r.min+Math.round((v-r.min)/r.step)*r.step).toFixed(4); };
+function calc(){
+  const s=cfg.slider, P=ui.amt*1e6, n=ui.ten, r=(+s.rate||0)/100;
+  const pokok=P/n, bunga=P*r, cicilan=Math.ceil((pokok+bunga)/100)*100;
+  return {pokok,bunga,cicilan,total:cicilan*n};
+}
+function clampUI(){
+  const s=cfg.slider, A=range(s.minAmt,s.maxAmt,s.stepAmt), T=range(s.minTen,s.maxTen,s.stepTen);
+  ui.amt=snap(ui.amt??s.defAmt,A); ui.ten=snap(ui.ten??s.defTen,T); return {A,T};
+}
+
+const ic={
+  x:'<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>',
+  cal:'<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><rect x="3.5" y="5" width="17" height="15.5" rx="2.5"/><path d="M3.5 10h17M8 3v4M16 3v4"/><path d="M12 13v3l2 1"/></svg>',
+  logo:'<svg viewBox="0 0 48 36" width="44" height="33" aria-hidden="true"><path d="M2 14h20" stroke="#3E78C2" stroke-width="2.5" stroke-linecap="round"/><path d="M14 9.5A15 15 0 1 1 15 28" fill="none" stroke="#8DBE3F" stroke-width="4" stroke-linecap="round"/><path d="M23 12a9 9 0 1 1-4 14" fill="none" stroke="#8DBE3F" stroke-width="3" stroke-linecap="round"/><text x="34" y="13" font-size="8" font-weight="700" fill="#8DBE3F" font-family="Roboto,sans-serif">$</text></svg>',
+  home:'<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 3.2 3 11v9.5a1 1 0 0 0 1 1h5.5v-6h5v6H20a1 1 0 0 0 1-1V11z"/></svg>',
+  doc:'<svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 3h10a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2zm2 5v1.6h6V8zm0 4v1.6h6V12z"/></svg>',
+  help:'<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zm.1 15.6a1.3 1.3 0 1 1 0-2.6 1.3 1.3 0 0 1 0 2.6zm1.4-5c-.7.4-.9.7-.9 1.4v.3h-2v-.4c0-1.3.5-2 1.5-2.6.8-.5 1-.8 1-1.4 0-.6-.5-1.1-1.2-1.1-.8 0-1.3.5-1.4 1.3H8.5c.1-2 1.6-3.2 3.6-3.2 2 0 3.3 1.1 3.3 2.8 0 1.1-.5 1.9-1.9 2.9z"/></svg>',
+  user:'<svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="8" r="4.5"/><path d="M3.5 21a8.5 8.5 0 0 1 17 0z"/></svg>',
+  check:'<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round"><path d="M5 12l5 5L19 7"/></svg>',
+  chevron:'<svg width="8" height="12" viewBox="0 0 8 12" fill="none" stroke="#9CA3AF" stroke-width="2" stroke-linecap="round"><path d="M1 1l5 5-5 5"/></svg>',
+  book:'<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>',
+  handshake:'<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20.5 11H17l-3-4-2.5 2L14 12l-1 4-3-2-3.5 2"/><path d="M2 11h3.5"/><path d="M22 11l-4 6h-4l-1.5-2"/><path d="M6 7l4-3 6 4"/></svg>'
+};
+
+/* ================= COMPONENTS ================= */
+const C={
+  hope(){ const c=cfg.hope;
+    return '<div class="card"><div class="hope"><img class="hope-img" src="'+esc(c.image)+'" alt="Hope" onerror="this.style.display=\'none\'"><div class="hope-txt"><p class="c-title">'+esc(c.title)+'</p><p class="c-body">'+esc(c.body)+'</p></div></div></div>'; },
+
+  actions(){ const a=cfg.actions;
+    function row(label,type,done,on,idx){
+      const icClass=idx===1?"profile":idx===2?"reminder":"device";
+      const icTxt=idx===1?'\u{1F464}':idx===2?'\u{23F0}':'\u{1F4F1}';
+      var right='';
+      if(type==="toggle") right='<div class="act-toggle'+(on?" on":"")+'" data-act="toggle" data-idx="'+idx+'"></div>';
+      else { var pg=idx===1?"profile":idx===3?"permissions":""; right='<span class="act-arrow" '+(pg?'data-act="page" data-v="'+pg+'"':'')+'>'+ic.chevron+'</span>'; }
+      return '<div class="act-item" '+(type!=="toggle"&&(idx===1||idx===3)?'data-act="page" data-v="'+(idx===1?"profile":"permissions")+'" style="cursor:pointer"':'')+'><div class="act-ic '+icClass+'">'+icTxt+'</div><span class="act-label">'+esc(label)+'</span>'+right+'</div>';
+    }
+    return '<div class="card" style="padding:12px 16px"><p class="c-title" style="margin-bottom:4px">'+esc(a.title)+'</p><div class="act-list">'+
+      row(a.step1Label,a.step1Type,a.step1Done,false,1)+
+      row(a.step2Label,a.step2Type,false,a.step2On,2)+
+      row(a.step3Label,a.step3Type,a.step3Done,false,3)+
+      '</div></div>'; },
+
+  literacy(){ const l=cfg.literacy;
+    return '<div class="card lit-card" data-act="page" data-v="literacy" style="cursor:pointer"><div class="lit-img">'+ic.book+'</div><div class="lit-tag">'+esc(l.tag)+'</div><p class="c-title">'+esc(l.title)+'</p><p class="c-body" style="margin-bottom:10px">'+esc(l.body)+'</p><button class="btn link" data-act="page" data-v="literacy">'+esc(l.cta)+'</button></div>'; },
+
+  score(){ const s=cfg.score, v=+s.value, mx=+s.maxValue, pv=+s.progressValue;
+    const circ=2*Math.PI*42, offset=circ*(1-Math.min(v/mx,1));
+    const status=v>=s.statusGoodMin?"good":v>=s.statusFairMin?"fair":"poor";
+    const statusTxt=status==="good"?"Baik":status==="fair"?"Cukup":"Perlu Ditingkatkan";
+    return '<div class="card score-wrap"><div class="score-ring"><svg viewBox="0 0 100 100"><circle class="bg" cx="50" cy="50" r="42"/><circle class="fg" cx="50" cy="50" r="42" stroke-dasharray="'+circ.toFixed(1)+'" stroke-dashoffset="'+offset.toFixed(1)+'"/></svg><div class="score-val">'+v+'</div></div>'+
+      '<div class="score-label">'+esc(s.label)+'</div>'+
+      '<span class="score-status '+status+'">'+statusTxt+'</span>'+
+      '<div class="score-prog"><div class="score-prog-title">'+esc(s.progressTitle)+'</div><div class="prog-bar"><div class="prog-fill" style="width:'+pv+'%"></div></div><div class="prog-label"><span>'+esc(s.progressLabel)+'</span><span>'+pv+'%</span></div></div>'+
+      '<button class="btn filled" style="margin-top:14px" data-act="page" data-v="literacy">Cara Tingkatkan Skor</button></div>'; },
+
+  referral(){ const r=cfg.referral;
+    return '<div class="card ref-card standout"><div class="ref-top"><div class="ref-ic">'+ic.handshake+'</div><div class="ref-info"><span class="ref-partner">'+esc(r.partner)+'</span>'+(r.badge?'<span class="chip-ok" style="margin-left:6px">'+esc(r.badge)+'</span>':'')+'</div></div><p class="c-title" style="margin-top:10px">'+esc(r.title)+'</p><div class="ref-amt">'+rp(r.amount)+'</div><div class="ref-rate">Mulai dari '+esc(r.rate)+'% per bulan</div><p class="c-body" style="margin-bottom:12px">'+esc(r.body)+'</p><button class="btn filled" style="background:var(--brand)" data-act="toast" data-v="'+esc(r.cta)+' → '+esc(r.url)+'">'+esc(r.cta)+'</button></div>'; },
+
+  rejection(){ const j=cfg.rejection;
+    function actRow(label,desc,done){
+      return '<div class="rej-act"><div class="act-check'+(done?" done":"")+'">'+( done?ic.check:"" )+'</div><div class="rej-act-txt"><span class="rej-act-label">'+esc(label)+'</span><span class="rej-act-desc">'+esc(desc)+'</span></div></div>';
+    }
+    return '<div class="card rej-card"><div class="rej-header"><span class="rej-warn-ic">⚠️</span><p class="c-title">'+esc(j.title)+'</p></div><div class="rej-reason">'+esc(j.reason)+'</div><div class="rej-acts">'+
+      actRow(j.act1Label,j.act1Desc,j.act1Done)+actRow(j.act2Label,j.act2Desc,j.act2Done)+actRow(j.act3Label,j.act3Desc,j.act3Done)+
+      '</div><button class="btn filled" style="margin-top:12px" data-act="toast" data-v="'+esc(j.cta)+'">'+esc(j.cta)+'</button></div>'; },
+
+  riskprofile(){ const c=cfg.riskprofile;
+    function riskRow(label,desc,level){
+      var color=level==="high"?"#E8505B":level==="medium"?"#F59E0B":"#46A000";
+      var bg=level==="high"?"#FEE2E2":level==="medium"?"#FFF3E0":"#E8F5E2";
+      var text=level==="high"?"Tinggi":level==="medium"?"Sedang":"Rendah";
+      return '<div class="rp-row"><div class="rp-row-left"><span class="rp-label">'+esc(label)+'</span><span class="rp-desc">'+esc(desc)+'</span></div><span class="rp-badge" style="background:'+bg+';color:'+color+'">'+text+'</span></div>';
+    }
+    return '<div class="card rp-card"><div class="rp-illus">\u{1F4CA}</div><p class="c-title">'+esc(c.title)+'</p><div class="rp-rows">'+
+      riskRow(c.r1Label,c.r1Desc,c.r1Level)+riskRow(c.r2Label,c.r2Desc,c.r2Level)+riskRow(c.r3Label,c.r3Desc,c.r3Level)+
+      riskRow(c.r4Label,c.r4Desc,c.r4Level)+riskRow(c.r5Label,c.r5Desc,c.r5Level)+
+      '</div><button class="btn filled" style="margin-top:12px" data-act="page" data-v="riskdetail">Lihat Detail Profil Risiko</button></div>'; },
+
+  lockedlimit(){ const c=cfg.lockedlimit;
+    return '<div class="card ll-card"><div class="ll-top"><span class="ll-lock-ic">\u{1F512}</span><div><div class="ll-label">'+esc(c.label)+(c.badge?'<span class="chip-ok" style="margin-left:6px;background:#FFF3E0;color:#F59E0B">'+esc(c.badge)+'</span>':'')+'</div><div class="ll-amt">'+rp(c.amount)+'</div></div></div><div class="ll-reason">'+esc(c.reason)+'</div><p class="c-body" style="margin-bottom:4px">'+esc(c.body)+'</p><div class="ll-date">Bisa digunakan mulai: <b>'+ddmmyyyy(c.reapplyDate)+'</b></div><button class="btn filled" style="margin-top:12px" data-act="tips">'+esc(c.cta)+'</button></div>'; },
+
+  slider(){ const s=cfg.slider, {A,T}=clampUI(), k=calc();
+    return '<div class="card"><p class="c-title">'+esc(s.title)+'</p>'+
+      '<div class="ln-row"><span>'+esc(s.amountLabel)+'</span><b data-o="amt">'+rp(ui.amt*1e6)+'</b></div>'+
+      '<input class="rng" type="range" data-k="amt" min="'+A.min+'" max="'+A.max+'" step="'+A.step+'" value="'+ui.amt+'" style="--pct:'+pct(ui.amt,A.min,A.max)+'" aria-label="'+esc(s.amountLabel)+'">'+
+      '<div class="ln-mm"><span>'+jt(A.min)+'</span><span>'+jt(A.max)+'</span></div>'+
+      '<div class="ln-row"><span>'+esc(s.tenorLabel)+'</span><b data-o="ten">'+ui.ten+' bulan</b></div>'+
+      '<input class="rng" type="range" data-k="ten" min="'+T.min+'" max="'+T.max+'" step="'+T.step+'" value="'+ui.ten+'" style="--pct:'+pct(ui.ten,T.min,T.max)+'" aria-label="'+esc(s.tenorLabel)+'">'+
+      '<div class="ln-mm"><span>'+T.min+' bulan</span><span>'+T.max+' bulan</span></div>'+
+      '<div class="inst"><div class="inst-top"><span>Cicilan per bulan</span><b data-o="cicilan">'+rp(k.cicilan)+'</b></div>'+
+        (s.showBreakdown?'<dl><dt>Pokok per bulan</dt><dd data-o="pokok">'+rp(k.pokok)+'</dd><dt>Bunga per bulan ('+(+s.rate).toLocaleString("id-ID")+'%)</dt><dd data-o="bunga">'+rp(k.bunga)+'</dd><dt>Total pembayaran</dt><dd data-o="total">'+rp(k.total)+'</dd></dl>':"")+'</div>'+
+      '<div class="ln-cta"><button class="btn filled" data-act="toast" data-v="'+esc(s.ctaLabel)+'" '+(s.ctaEnabled?"":"disabled")+'>'+esc(s.ctaLabel)+'</button>'+(!s.ctaEnabled&&s.disabledNote?'<p class="ln-dis">'+esc(s.disabledNote)+'</p>':"")+'</div></div>'; },
+
+  preapproved(){ const c=cfg.preapproved;
+    return '<div class="card ll-card"><div class="ll-top"><span class="ll-lock-ic">\u{2705}</span><div><div class="ll-label">'+esc(c.label)+(c.badge?'<span class="chip-ok" style="margin-left:6px;background:#E8F5E2;color:var(--pri)">'+esc(c.badge)+'</span>':'')+'</div><div class="ll-amt">'+rp(c.amount)+'</div></div></div><p class="c-body" style="margin-bottom:4px">'+esc(c.body)+'</p><div class="ll-date">Berlaku hingga: <b>'+ddmmyyyy(c.date)+'</b></div><button class="btn filled" style="margin-top:12px" data-act="modal">'+esc(c.cta)+'</button></div>'; }
+};
+function modalHTML(){ const c=cfg.preapproved;
+  return '<div class="ovl" data-act="close"><div class="mdl" role="dialog" aria-modal="true" aria-label="'+esc(c.modalTitle)+'"><div class="mdl-ic">'+ic.cal+'</div><p class="c-title">'+esc(c.modalTitle)+'</p><p>Kamu dapat mengajukan pinjaman lagi pada <b>'+ddmmyyyy(c.date)+'</b></p><button class="btn filled" data-act="close">'+esc(c.modalBtn)+'</button></div></div>'; }
+function tipsHTML(){
+  return '<div class="ovl" data-act="close"><div class="mdl" role="dialog" aria-modal="true" aria-label="Tips Meningkatkan Skor"><div class="mdl-ic">\u{1F4A1}</div><p class="c-title">Tips Buka Limit</p><div class="tips-list">'+
+    '<div class="tips-item"><span class="tips-ic">\u{1F4B0}</span><span class="tips-txt">Perbarui data penghasilan secara berkala</span></div>'+
+    '<div class="tips-item"><span class="tips-ic">\u{2705}</span><span class="tips-txt">Bayar semua cicilan tepat waktu</span></div>'+
+    '<div class="tips-item"><span class="tips-ic">\u{1F4F1}</span><span class="tips-txt">Izinkan semua akses data perangkat</span></div>'+
+    '<div class="tips-item"><span class="tips-ic">\u{1F4DD}</span><span class="tips-txt">Lengkapi semua data profil</span></div>'+
+    '<div class="tips-item"><span class="tips-ic">\u{23F3}</span><span class="tips-txt">Tunggu masa evaluasi selesai</span></div>'+
+    '</div><button class="btn filled" data-act="close">Mengerti</button></div></div>';
+}
+function pageHTML(pg){
+  if(pg==="profile") return profilePageHTML();
+  if(pg==="permissions") return permissionsPageHTML();
+  if(pg==="literacy") return literacyPageHTML();
+  if(pg==="riskdetail") return riskDetailPageHTML();
+  return "";
+}
+function profilePageHTML(){
+  return '<div class="pg-header"><button class="pg-back" data-act="back">\u{2190}</button><span class="pg-title">Lengkapi Profil</span></div><div class="pg-body">'+
+    '<div class="pf-section">Data Pribadi</div>'+
+    '<div class="pf-field"><span class="pf-label">Nama Lengkap</span><div class="pf-val ok">Indra Ferdiyanto</div></div>'+
+    '<div class="pf-field"><span class="pf-label">No. KTP</span><div class="pf-val ok">3374xxxxxxxxxxxx</div></div>'+
+    '<div class="pf-field"><span class="pf-label">Tanggal Lahir</span><div class="pf-val ok">15-03-1990</div></div>'+
+    '<div class="pf-field"><span class="pf-label">Alamat Email</span><div class="pf-val empty">Belum diisi</div></div>'+
+    '<div class="pf-section">Data Pekerjaan</div>'+
+    '<div class="pf-field"><span class="pf-label">Jenis Pekerjaan</span><div class="pf-val ok">Karyawan Swasta</div></div>'+
+    '<div class="pf-field"><span class="pf-label">Nama Perusahaan</span><div class="pf-val empty">Belum diisi</div></div>'+
+    '<div class="pf-field"><span class="pf-label">Penghasilan per Bulan</span><div class="pf-val empty">Belum diisi</div></div>'+
+    '<div class="pf-field"><span class="pf-label">Lama Bekerja</span><div class="pf-val empty">Belum diisi</div></div>'+
+    '<div class="pf-section">Kontak Darurat</div>'+
+    '<div class="pf-field"><span class="pf-label">Nama Kontak</span><div class="pf-val ok">Budi Santoso</div></div>'+
+    '<div class="pf-field"><span class="pf-label">No. Telepon Kontak</span><div class="pf-val ok">0812xxxxxxxx</div></div>'+
+    '<div class="pf-field"><span class="pf-label">Hubungan</span><div class="pf-val empty">Belum diisi</div></div>'+
+    '<button class="btn filled" style="margin-top:8px" data-act="toast" data-v="Simpan Profil">Simpan Perubahan</button></div>';
+}
+function permissionsPageHTML(){
+  function pRow(icon,name,allowed){
+    var st=allowed?"allow":"deny";
+    return '<div class="perm-row"><div class="perm-ic '+st+'">'+icon+'</div><div class="perm-info"><div class="perm-name">'+name+'</div><div class="perm-status '+st+'">'+(allowed?"Diizinkan":"Belum diizinkan")+'</div></div><span class="perm-badge '+st+'">'+(allowed?"Aktif":"Nonaktif")+'</span></div>';
+  }
+  return '<div class="pg-header"><button class="pg-back" data-act="back">\u{2190}</button><span class="pg-title">Izin Perangkat</span></div><div class="pg-body">'+
+    '<p class="c-body" style="margin:-4px 0 4px">Izinkan akses berikut untuk meningkatkan peluang persetujuan pinjamanmu.</p>'+
+    pRow('\u{1F4F7}','Kamera',true)+
+    pRow('\u{1F4C1}','Penyimpanan Aplikasi',false)+
+    pRow('\u{1F4D2}','Kontak',false)+
+    pRow('\u{1F514}','Notifikasi',true)+
+    pRow('\u{1F4CD}','Lokasi',false)+
+    pRow('\u{1F4DE}','Log Panggilan',false)+
+    '</div>';
+}
+function literacyPageHTML(){
+  return '<div class="pg-header"><button class="pg-back" data-act="back">\u{2190}</button><span class="pg-title">Cara Meningkatkan Skor Kredit</span></div><div class="pg-body">'+
+    '<div style="width:100%;height:100px;border-radius:12px;background:linear-gradient(135deg,#E0F2E9 0%,#D4ECFA 100%);display:grid;place-items:center;font-size:36px">\u{1F4C8}</div>'+
+    '<p class="c-body" style="line-height:1.6">Skor kredit menentukan kelayakanmu untuk mendapatkan pinjaman. Berikut langkah-langkah untuk meningkatkannya:</p>'+
+    '<div class="step-item"><div class="step-num">1</div><div class="step-line"></div><div class="step-content"><h4>Perbarui Data Penghasilan</h4><p>Pastikan data penghasilan terbaru sudah diisi dengan benar. Penghasilan yang tercatat lebih tinggi meningkatkan skor kelayakanmu.</p><div class="step-img" style="background:#E8F0FE">\u{1F4B5}</div></div></div>'+
+    '<div class="step-item"><div class="step-num">2</div><div class="step-line"></div><div class="step-content"><h4>Bayar Semua Cicilan Tepat Waktu</h4><p>Riwayat pembayaran tepat waktu adalah faktor terbesar dalam skor kredit. Hindari keterlambatan pembayaran cicilan apapun.</p><div class="step-img" style="background:#E8F5E2">\u{2705}</div></div></div>'+
+    '<div class="step-item"><div class="step-num">3</div><div class="step-line"></div><div class="step-content"><h4>Izinkan Akses Data Perangkat</h4><p>Memberikan izin akses data perangkat membantu verifikasi identitasmu dan meningkatkan kepercayaan platform terhadap profilmu.</p><div class="step-img" style="background:#FFF3E0">\u{1F4F1}</div></div></div>'+
+    '<div class="step-item"><div class="step-num">4</div><div class="step-line"></div><div class="step-content"><h4>Lengkapi Semua Data Profil</h4><p>Profil yang lengkap menunjukkan kredibilitas. Isi semua field termasuk data pekerjaan dan kontak darurat.</p><div class="step-img" style="background:#F3E8FF">\u{1F4DD}</div></div></div>'+
+    '<div class="step-item"><div class="step-num">5</div><div class="step-line"></div><div class="step-content"><h4>Hindari Pengajuan di Banyak Platform</h4><p>Terlalu banyak pengajuan pinjaman dalam waktu singkat bisa menurunkan skor kreditmu. Fokus pada satu platform.</p><div class="step-img" style="background:#FEE2E2">\u{26A0}\u{FE0F}</div></div></div>'+
+    '</div>';
+}
+function riskDetailPageHTML(){ const c=cfg.riskprofile;
+  function detailCard(label,desc,level){
+    var color=level==="high"?"#E8505B":level==="medium"?"#F59E0B":"#46A000";
+    var bg=level==="high"?"#FEE2E2":level==="medium"?"#FFF3E0":"#E8F5E2";
+    var text=level==="high"?"Tinggi":level==="medium"?"Sedang":"Rendah";
+    var tip=level==="high"?"Perlu perhatian segera.":level==="medium"?"Masih bisa diperbaiki.":"Sudah baik, pertahankan.";
+    return '<div class="rpd-card"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px"><h4 style="color:'+color+'">'+esc(label)+'</h4><span class="rp-badge" style="background:'+bg+';color:'+color+'">'+text+'</span></div><p>'+esc(desc)+'</p><p style="margin-top:6px;font-size:12px;font-weight:600;color:'+color+'">'+tip+'</p></div>';
+  }
+  return '<div class="pg-header"><button class="pg-back" data-act="back">\u{2190}</button><span class="pg-title">Detail Profil Risiko</span></div><div class="pg-body">'+
+    '<div class="rpd-illus">\u{1F4CA}</div>'+
+    '<p class="c-body" style="margin-bottom:4px">Profil risiko menggambarkan tingkat kelayakan kreditmu berdasarkan beberapa faktor. Semakin rendah risiko, semakin besar peluang pinjamanmu disetujui.</p>'+
+    detailCard(c.r1Label,c.r1Desc,c.r1Level)+detailCard(c.r2Label,c.r2Desc,c.r2Level)+detailCard(c.r3Label,c.r3Desc,c.r3Level)+
+    detailCard(c.r4Label,c.r4Desc,c.r4Level)+detailCard(c.r5Label,c.r5Desc,c.r5Level)+
+    '</div>';
+}
+
+const phone=document.getElementById("phone");
+function applyTheme(){ const t=cfg.theme;
+  const v={"--pri":t.primary,"--brand":t.brand,"--bg":t.background,"--tx":t.text,"--tx2":t.muted,"--warn":t.warning,"--r":t.cardRadius+"px","--br":t.buttonRadius+"px"};
+  for(const k in v) phone.style.setProperty(k,v[k]); }
+function render(){
+  applyTheme();
+  const old=phone.querySelector(".ph-scroll"), keep=old?old.scrollTop:0;
+  var inner="";
+  if(ui.page){
+    inner='<div class="ph-status"><span>&#x25BE; &#x25E2; &#x25AE;</span><span>12:30</span></div>'+
+      '<div class="ph-scroll" style="padding:0">'+pageHTML(ui.page)+'</div>';
+  } else {
+    const body=cfg.order.filter(k=>cfg.show[k]).map(k=>{ const h=C[k](); return h?'<section class="el" data-el="'+k+'" data-name="'+NAMES[k]+'">'+h+'</section>':""; }).join("");
+    inner='<div class="ph-status"><span>&#x25BE; &#x25E2; &#x25AE;</span><span>12:30</span></div>'+
+      '<header class="ph-top"><div class="logo">'+ic.logo+'<span><span class="g">tunai</span><span class="b">ku</span></span></div></header>'+
+      '<div class="ph-scroll">'+(body||'<p class="empty-ph">No component on. Turn one on in the left pane.</p>')+'</div>'+
+      '<nav class="ph-nav"><div class="on">'+ic.home+'Pinjamanku</div><div>'+ic.doc+'Riwayat</div><div>'+ic.help+'Bantuan</div><div>'+ic.user+'Profil</div></nav>';
+  }
+  phone.innerHTML=inner+
+    (ui.toast?'<div class="toast" role="status">Prototype: "'+esc(ui.toast)+'" tapped</div>':"")+
+    (ui.modal?modalHTML():"")+(ui.tips?tipsHTML():"");
+  phone.classList.toggle("inspect",ui.inspect&&!ui.page);
+  if(!ui.page){ const ns=phone.querySelector(".ph-scroll"); if(ns) ns.scrollTop=keep; }
+  phone.querySelector(".mdl .btn")?.focus();
+}
+function updateSlider(){ const k=calc(), q=s=>phone.querySelector('[data-o="'+s+'"]');
+  if(!q("amt")) return;
+  q("amt").textContent=rp(ui.amt*1e6); q("ten").textContent=ui.ten+" bulan"; q("cicilan").textContent=rp(k.cicilan);
+  if(q("pokok")){ q("pokok").textContent=rp(k.pokok); q("bunga").textContent=rp(k.bunga); q("total").textContent=rp(k.total); } }
+
+var toastT;
+phone.addEventListener("input",e=>{ const r=e.target.closest(".rng"); if(!r) return;
+  ui[r.dataset.k]=+r.value; r.style.setProperty("--pct",pct(+r.value,+r.min,+r.max)); updateSlider(); });
+phone.addEventListener("click",e=>{
+  if(ui.inspect){ const s=e.target.closest(".el"); if(s){ e.preventDefault(); openSection(s.dataset.el); return; } }
+  const tgl=e.target.closest(".act-toggle"); if(tgl){
+    const idx=tgl.dataset.idx;
+    if(idx==="2"){ cfg.actions.step2On=!cfg.actions.step2On; save(); render(); return; }
+  }
+  const a=e.target.closest("[data-act]"); if(!a) return;
+  const act=a.dataset.act;
+  if(act==="close" && a.classList.contains("ovl") && e.target!==a) return;
+  if(act==="modal") ui.modal=true;
+  if(act==="close"){ ui.modal=false; ui.tips=false; }
+  if(act==="tips") ui.tips=true;
+  if(act==="page"){ ui.page=a.dataset.v||""; }
+  if(act==="back"){ ui.page=""; }
+  if(act==="toast"){ ui.toast=a.dataset.v; clearTimeout(toastT); toastT=setTimeout(function(){ui.toast="";render();},1800); }
+  render();
+});
+document.addEventListener("keydown",e=>{ if(e.key==="Escape"){ if(ui.modal||ui.tips){ ui.modal=false; ui.tips=false; render(); } else if(ui.page){ ui.page=""; render(); } } });
+
+const left=document.getElementById("left");
+function renderLeft(){ const o=cfg.order;
+  left.innerHTML='<h2>Components</h2><p class="lede">Turn on, off, reorder. Top and bottom bars stay fixed.</p>'+
+  '<ul class="comp">'+
+    '<li class="fixed"><span class="nm">Top bar</span><span class="lock">Fixed</span></li>'+
+    o.map((k,i)=>'<li class="'+(cfg.show[k]?"":"off")+'"><label class="sw" title="Show '+NAMES[k]+'"><input type="checkbox" data-show="'+k+'" '+(cfg.show[k]?"checked":"")+' aria-label="Show '+NAMES[k]+'"><span></span></label><span class="nm">'+NAMES[k]+'</span><button class="mini" data-mv="'+i+'" data-d="-1" '+(i===0?"disabled":"")+' aria-label="Move up">&#x2191;</button><button class="mini" data-mv="'+i+'" data-d="1" '+(i===o.length-1?"disabled":"")+' aria-label="Move down">&#x2193;</button></li>').join("")+
+    '<li class="fixed"><span class="nm">Bottom bar</span><span class="lock">Fixed</span></li>'+
+  '</ul>';
+}
+left.addEventListener("change",e=>{ const k=e.target.dataset.show; if(!k) return; cfg.show[k]=e.target.checked; save(); renderLeft(); renderRight(); render(); });
+left.addEventListener("click",e=>{
+  const b=e.target.closest("[data-mv]"); if(!b) return;
+  const i=+b.dataset.mv, j=i+ +b.dataset.d, o=cfg.order; [o[i],o[j]]=[o[j],o[i]];
+  save(); renderLeft(); render();
+});
+
+const right=document.getElementById("right");
+function field(f){
+  if(f.s) return '<div class="sub">'+f.s+'</div>';
+  if(f.h) return '<div class="help">'+f.h+'</div>';
+  const v=get(cfg,f.p), id="f-"+f.p.replace(/\./g,"-"); var ctl="", stack=false;
+  if(f.t==="color") ctl='<input id="'+id+'" type="color" data-p="'+f.p+'" data-t="str" value="'+v+'">';
+  else if(f.t==="range") ctl='<span class="rng"><input id="'+id+'" type="range" data-p="'+f.p+'" data-t="num" min="'+f.min+'" max="'+f.max+'" step="'+(f.step||1)+'" value="'+v+'"><output>'+v+(f.u||"")+'</output></span>';
+  else if(f.t==="num") ctl='<input id="'+id+'" type="number" data-p="'+f.p+'" data-t="num" min="'+f.min+'" max="'+f.max+'" step="'+(f.step||1)+'" value="'+v+'">';
+  else if(f.t==="select") ctl='<select id="'+id+'" data-p="'+f.p+'" data-t="'+(typeof v==="number"?"num":"str")+'">'+f.o.map(o=>'<option '+(o==v?"selected":"")+'>'+o+'</option>').join("")+'</select>';
+  else if(f.t==="bool") ctl='<input id="'+id+'" type="checkbox" data-p="'+f.p+'" data-t="bool" '+(v?"checked":"")+'">';
+  else if(f.t==="date") ctl='<input id="'+id+'" type="date" data-p="'+f.p+'" data-t="str" value="'+esc(v)+'">';
+  else if(f.t==="area"){ stack=true; ctl='<textarea id="'+id+'" data-p="'+f.p+'" data-t="str" rows="3">'+esc(v)+'</textarea>'; }
+  else { stack=f.l.length>14; ctl='<input id="'+id+'" type="text" data-p="'+f.p+'" data-t="str" value="'+esc(v)+'">'; }
+  return '<div class="f '+(stack?"stack":"")+'" data-u="'+(f.u||"")+'"><label for="'+id+'">'+f.l+'</label>'+ctl+'</div>';
+}
+function renderRight(){
+  const open=[...right.querySelectorAll("details[open]")].map(d=>d.id);
+  const sec=(id,g,dot)=>'<details id="sec-'+id+'" '+(open.includes("sec-"+id)?"open":"")+'><summary>'+(dot!==undefined?'<span class="dot '+(dot?"on":"")+'"></span>':"")+''+g.n+'</summary><div class="fields">'+g.f.map(field).join("")+'</div></details>';
+  right.innerHTML='<h2>Element settings</h2><p class="lede">Content, behavior and states for each component.</p>'
+    + cfg.order.map(k=>sec(k,SCHEMA[k],cfg.show[k])).join("") + sec("theme",SCHEMA.theme);
+}
+right.addEventListener("input",e=>{
+  const el=e.target.closest("[data-p]"); if(!el) return;
+  if(el.type==="number" && el.value==="") return;
+  const t=el.dataset.t, val=t==="bool"?el.checked:t==="num"?+el.value:el.value;
+  set(cfg,el.dataset.p,val);
+  const out=el.parentElement.querySelector("output"); if(out) out.textContent=val+el.closest(".f").dataset.u;
+  if(/^slider\.(def|min|max|step)/.test(el.dataset.p)){ if(/def/.test(el.dataset.p)){ ui.amt=null; ui.ten=null; } }
+  save(); render();
+});
+function openSection(k){ const d=document.getElementById("sec-"+k); if(!d) return;
+  d.open=true; d.scrollIntoView({behavior:"smooth",block:"start"}); d.classList.add("flash"); setTimeout(()=>d.classList.remove("flash"),900);
+  d.querySelector("input,select,textarea")?.focus({preventScroll:true}); }
+
+const insp=document.getElementById("inspect");
+insp.onclick=()=>{ ui.inspect=!ui.inspect; insp.setAttribute("aria-pressed",ui.inspect); render(); };
+const dev=document.getElementById("device");
+function setDevice(){ const [w,h]=dev.value.split("x"); phone.style.setProperty("--dev-w",w+"px"); phone.style.setProperty("--dev-h",h+"px"); try{localStorage.setItem(KEY+"-dev",dev.value);}catch(e){} }
+try{ const d=localStorage.getItem(KEY+"-dev"); if(d && [...dev.options].some(o=>o.value===d)) dev.value=d; }catch(e){}
+dev.onchange=setDevice;
+document.getElementById("resetBtn").onclick=()=>{ cfg=clone(DEFAULTS); Object.assign(ui,{amt:null,ten:null,modal:false,tips:false,page:""}); save(); renderLeft(); renderRight(); render(); };
+const dlg=document.getElementById("dlg"), ta=document.getElementById("json"), jerr=document.getElementById("jsonErr");
+document.getElementById("exportBtn").onclick=()=>{ ta.value=JSON.stringify(cfg,null,2); jerr.textContent=""; dlg.showModal(); };
+document.getElementById("closeDlg").onclick=()=>dlg.close();
+document.getElementById("copyJson").onclick=async()=>{ try{ await navigator.clipboard.writeText(ta.value); jerr.textContent="Copied."; }catch(e){ ta.select(); jerr.textContent="Selected. Press Ctrl/Cmd+C."; } };
+document.getElementById("applyJson").onclick=()=>{ try{ cfg=merge(DEFAULTS,JSON.parse(ta.value)); ui.amt=ui.ten=null; save(); renderLeft(); renderRight(); render(); dlg.close(); }catch(e){ jerr.textContent="Invalid JSON: "+e.message; } };
+
+setDevice(); renderLeft(); renderRight(); render();
+</script>
+</body>
+</html>
