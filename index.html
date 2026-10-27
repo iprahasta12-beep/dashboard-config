@@ -108,8 +108,9 @@ details[open] summary::after{transform:rotate(-135deg)}
 .btn{font:500 14px/1 Roboto,sans-serif;letter-spacing:.07em;border-radius:var(--br);cursor:pointer;height:36px;padding:0 16px;border:1.5px solid transparent;background:none;color:var(--pri)}
 .btn.text{padding:0 8px}
 .btn.outline{border-color:var(--pri)}
+.btn.secondary{background:#fff;border:1.5px solid var(--pri);color:var(--pri);height:44px;width:100%;font-weight:600}
 .btn.filled{background:var(--pri);color:#fff;height:44px;width:100%;font-weight:500}
-.btn.filled:disabled{background:#D5DAE0;color:#8A939E;cursor:not-allowed}
+.btn.filled:disabled{background:#CDD0D6;color:#fff;cursor:not-allowed}
 .btn.link{padding:0;height:auto}
 
 /* hope card */
@@ -135,29 +136,71 @@ details[open] summary::after{transform:rotate(-135deg)}
 .act-toggle::after{content:"";position:absolute;top:2px;left:2px;width:16px;height:16px;border-radius:50%;background:#fff;transition:transform .15s;box-shadow:0 1px 2px rgba(0,0,0,.15)}
 .act-toggle.on::after{transform:translateX(14px)}
 .act-arrow{color:#9CA3AF;flex:none;font-size:14px}
+/* grouped action step v2 */
+.ga-wrap{display:flex;flex-direction:column;gap:16px}
+.ga-reason{background:#fff;border:1px solid #E5E7EB;border-radius:12px;padding:14px 16px}
+.ga-rlbl{font-size:12px;color:var(--tx2)}
+.ga-rtxt{font-size:15px;font-weight:600;color:var(--tx);margin:4px 0 10px;line-height:1.4}
+.ga-rlink{border:0;background:none;padding:0;color:var(--pri);font:500 13px/1.2 Roboto,sans-serif;cursor:pointer}
+.ga-card{padding:16px}
+.ga-head{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:2px}
+.ga-title{font-size:15px;font-weight:500;color:var(--tx)}
+.ga-badge{font-size:12px;font-weight:500;background:#FFF6D6;color:#7A5B00;border-radius:6px;padding:3px 8px;white-space:nowrap;flex:none}
+.ga-badge.all{background:#E8F5E2;color:var(--pri)}
+.ga-step{display:flex;align-items:center;gap:12px;padding:14px 0;border-bottom:1px solid #EEF0F4}
+.ga-step:last-child,.ga-step:has(+ .ga-note){border-bottom:none}
+.ga-num{width:24px;height:24px;border-radius:50%;border:1.5px solid #BDBDBD;font-size:12px;font-weight:600;color:var(--tx2);display:grid;place-items:center;flex:none}
+.ga-num.done{background:var(--pri);border-color:var(--pri)}
+.ga-txt{flex:1;min-width:0}
+.ga-lbl{font-size:14px;font-weight:500;color:var(--tx);line-height:1.3}
+.ga-desc{font-size:12px;color:var(--tx2);line-height:1.4;margin-top:3px}
+.ga-btn{flex:none;height:38px;padding:0 14px;border:1.5px solid var(--pri);border-radius:8px;background:#fff;color:var(--pri);font:500 13px/1 Roboto,sans-serif;cursor:pointer}
+.ga-step .act-toggle{width:44px;height:26px}
+.ga-step .act-toggle::after{width:22px;height:22px}
+.ga-step .act-toggle.on::after{transform:translateX(18px)}
+.ga-note{display:flex;gap:8px;align-items:flex-start;background:#FFF8E1;border-radius:10px;padding:12px;font-size:12.5px;color:var(--tx);line-height:1.45;margin-top:6px}
+.ga-note svg{flex:none;margin-top:1px;color:var(--tx2)}
 
 /* literacy */
-.lit-card{padding:14px}
-.lit-img{width:100%;height:100px;border-radius:10px;background:linear-gradient(135deg,#E0F2E9 0%,#D4ECFA 100%);margin-bottom:10px;display:grid;place-items:center;color:var(--pri);font-size:28px}
-.lit-tag{font-size:11px;color:var(--brand);font-weight:600;margin-bottom:4px}
+.lit-card{padding:12px}
+.lit-hero{width:100%;aspect-ratio:1983/793;object-fit:cover;border-radius:12px;display:block;margin-bottom:12px;background:#EAF3FB}
+.lit-tag{display:inline-block;font-size:12px;font-weight:700;color:var(--brand);background:#E8F0FE;border-radius:999px;padding:4px 12px;margin-bottom:10px}
+.lit-title{font-size:17px;font-weight:700;color:var(--tx);margin:0 0 6px;line-height:1.25}
+.lit-body{font-size:14px;margin:0 0 12px;line-height:1.5}
+.lit-div{height:1px;background:#EEF0F4;margin:0 0 12px}
+.lit-cta{border:0;background:none;padding:0;color:var(--pri);font:700 15px/1.2 Roboto,sans-serif;cursor:pointer}
 
 /* score */
-.score-wrap{text-align:center;padding:16px 16px 12px}
-.score-ring{position:relative;width:100px;height:100px;margin:0 auto 10px}
-.score-ring svg{width:100px;height:100px;transform:rotate(-90deg)}
-.score-ring .bg{fill:none;stroke:#E5E7EB;stroke-width:8}
-.score-ring .fg{fill:none;stroke:var(--pri);stroke-width:8;stroke-linecap:round;transition:stroke-dashoffset .4s}
-.score-val{position:absolute;inset:0;display:grid;place-items:center;font-size:28px;font-weight:700;color:var(--tx);font-variant-numeric:tabular-nums}
+.score-wrap{padding:16px}
+.sc-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px}
+.sc-title{font-size:18px;font-weight:700;color:var(--tx)}
+.sc-info{border:0;background:none;padding:0;color:#9AA3B2;cursor:pointer;display:grid;place-items:center}
+.sc-info svg{width:22px;height:22px}
+/* liquid gauge */
+.sc-gwrap{position:relative;width:160px;height:160px;margin:6px auto 16px;display:grid;place-items:center;border-radius:50%}
+.sc-gwrap::before{content:"";position:absolute;inset:0;border-radius:50%;box-shadow:0 0 0 2px var(--sc-faint),0 0 26px 3px var(--sc-glow)}
+.sc-gauge{position:relative;width:140px;height:140px;border-radius:50%;overflow:hidden;background:#FFFEFA;box-shadow:inset 0 0 0 4px var(--sc-ring)}
+.sc-liquid{position:absolute;left:0;right:0;bottom:0;height:var(--fill);animation:scfill 1.1s cubic-bezier(.33,.9,.4,1)}
+.sc-liquid::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,var(--sc-w1),var(--sc-w2))}
+.sc-wave{position:absolute;left:-50%;top:-12px;width:200%;height:18px;fill:var(--sc-w1);animation:scwave 2.6s linear infinite}
+.sc-wave.b{top:-8px;fill:var(--sc-w2);opacity:.75;animation-duration:3.6s;animation-direction:reverse}
+@keyframes scwave{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+@keyframes scfill{from{height:0}to{height:var(--fill)}}
+.sc-center{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;z-index:2}
+.sc-val{font-size:40px;font-weight:800;color:var(--tx);line-height:1;font-variant-numeric:tabular-nums}
+.sc-pill{font-size:13px;font-weight:700;border-radius:999px;padding:3px 14px;background:var(--sc-pill-bg);color:var(--sc-pill-tx)}
+.sc-gwrap.sc-good{--sc-ring:#46A000;--sc-faint:#BBE3A1;--sc-glow:rgba(70,160,0,.45);--sc-w1:#8BD45E;--sc-w2:#46A000;--sc-pill-bg:#E8F5E2;--sc-pill-tx:#2E7D00}
+.sc-gwrap.sc-fair{--sc-ring:#F5C01A;--sc-faint:#FBE7A1;--sc-glow:rgba(245,192,26,.55);--sc-w1:#FFDE59;--sc-w2:#F5C01A;--sc-pill-bg:#FEF6CC;--sc-pill-tx:#B7791F}
+.sc-gwrap.sc-poor{--sc-ring:#E8505B;--sc-faint:#F6B9BE;--sc-glow:rgba(232,80,91,.45);--sc-w1:#F58A92;--sc-w2:#E8505B;--sc-pill-bg:#FEE2E2;--sc-pill-tx:#C0343F}
 .score-label{font-size:13px;color:var(--tx2);margin-bottom:2px}
-.score-status{font-size:12px;font-weight:600;border-radius:999px;padding:2px 10px;display:inline-block}
-.score-status.good{background:#E8F5E2;color:var(--pri)}
-.score-status.fair{background:#FFF3E0;color:#F59E0B}
-.score-status.poor{background:#FEE2E2;color:#E8505B}
-.score-prog{margin-top:14px;text-align:left}
-.score-prog-title{font-size:12px;font-weight:600;color:var(--tx);margin-bottom:6px}
-.prog-bar{height:6px;border-radius:3px;background:#E5E7EB;overflow:hidden;margin-bottom:4px}
-.prog-fill{height:100%;border-radius:3px;background:var(--pri);transition:width .3s}
-.prog-label{display:flex;justify-content:space-between;font-size:11px;color:var(--tx2)}
+.score-prog{margin-top:4px;text-align:left;background:#EEF2F7;border-radius:14px;padding:14px 16px}
+.sc-prog-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+.score-prog-title{font-size:15px;font-weight:700;color:var(--tx)}
+.sc-prog-pct{font-size:16px;font-weight:800;color:var(--tx);font-variant-numeric:tabular-nums}
+.prog-bar{height:9px;border-radius:999px;background:#D7DEE8;overflow:hidden;margin-bottom:8px}
+.prog-fill{height:100%;border-radius:999px;background:#F5C01A;animation:scprog 1s cubic-bezier(.33,.9,.4,1)}
+@keyframes scprog{from{width:0}}
+.prog-label{font-size:13px;color:var(--tx2)}
 
 /* referral */
 .ref-card{padding:16px}
@@ -203,7 +246,15 @@ details[open] summary::after{transform:rotate(-135deg)}
 .pg-header{display:flex;align-items:center;gap:10px;padding:12px 16px;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.1);position:sticky;top:0;z-index:3}
 .pg-back{width:32px;height:32px;border-radius:50%;border:none;background:var(--bg);display:grid;place-items:center;cursor:pointer;flex:none;font-size:16px;color:var(--tx)}
 .pg-title{font-size:15px;font-weight:700;color:var(--tx);flex:1}
-.pg-body{padding:16px;display:flex;flex-direction:column;gap:16px}
+.pg-body{padding:16px;display:flex;flex-direction:column;gap:16px;background:#fff;min-height:100%}
+
+/* dummy page (blue app bar) */
+.dpg-bar{display:flex;align-items:center;gap:16px;background:var(--brand);color:#fff;padding:14px 16px 20px}
+.dpg-back{border:0;background:none;padding:0;color:#fff;cursor:pointer;display:grid;place-items:center;flex:none}
+.dpg-title{font-size:17px;font-weight:700;flex:1;color:#fff;line-height:1.2}
+.dpg-ic{flex:none;color:#fff;display:grid;place-items:center}
+.dpg-body{background:#fff;border-radius:18px 18px 0 0;margin-top:-10px;min-height:620px}
+.dpg-ph{color:#C2C8D2;font-size:13px;text-align:center;padding:48px 24px 0}
 
 /* profile page fields */
 .pf-field{display:flex;flex-direction:column;gap:3px}
@@ -214,18 +265,40 @@ details[open] summary::after{transform:rotate(-135deg)}
 .pf-section{font-size:13px;font-weight:700;color:var(--tx);margin-top:4px}
 
 /* permission page */
-.perm-row{display:flex;align-items:center;gap:12px;padding:12px;background:#fff;border-radius:10px}
-.perm-ic{width:36px;height:36px;border-radius:10px;display:grid;place-items:center;font-size:18px;flex:none}
-.perm-ic.allow{background:#E8F5E2;color:var(--pri)}
-.perm-ic.deny{background:#FEE2E2;color:var(--dng)}
+.perm-row{display:flex;align-items:center;gap:12px;padding:14px;background:#fff;border-radius:14px;box-shadow:0 1px 5px rgba(20,35,59,.06)}
+.perm-ic{width:40px;height:40px;border-radius:11px;display:grid;place-items:center;flex:none;background:#E8F0FE}
 .perm-info{flex:1}
-.perm-name{font-size:14px;font-weight:600;color:var(--tx)}
-.perm-status{font-size:12px}
+.perm-name{font-size:15px;font-weight:700;color:#13233B}
+.perm-status{font-size:13px;margin-top:1px}
 .perm-status.allow{color:var(--pri)}
-.perm-status.deny{color:var(--dng)}
-.perm-badge{font-size:11px;font-weight:600;border-radius:999px;padding:3px 10px;flex:none}
-.perm-badge.allow{background:#E8F5E2;color:var(--pri)}
-.perm-badge.deny{background:#FEE2E2;color:var(--dng)}
+.perm-status.deny{color:var(--tx2)}
+.perm-badge{display:flex;align-items:center;gap:5px;font-size:13px;font-weight:700;border-radius:999px;padding:6px 12px;flex:none}
+.perm-badge.allow{background:#DFF3E0;color:#2E7D32}
+.perm-badge.deny{background:#EEF1F5;color:#8A93A3}
+.perm-toggle{width:46px;height:27px}
+.perm-toggle::after{width:23px;height:23px}
+.perm-toggle.on::after{transform:translateX(19px)}
+
+/* KTP form (profile) */
+.kf-scroll{overflow-y:auto}
+.kf-title{font-size:19px;font-weight:800;color:#13233B;line-height:1.3;margin:0;padding:16px 16px 0}
+.kf-body{padding:14px 16px;display:flex;flex-direction:column;gap:16px}
+.kf-field{display:flex;flex-direction:column;gap:8px}
+.kf-label{font-size:15px;font-weight:700;color:#13233B}
+.kf-input{border:1px solid #D7DEE8;border-radius:10px;padding:13px 14px;font-size:15px;color:var(--tx);background:#fff;width:100%;font-family:inherit}
+.kf-input::placeholder{color:#9AA3B2}
+.kf-input:disabled{background:#F4F6F9;color:#6B7483}
+.kf-select,.kf-date{display:flex;align-items:center;justify-content:space-between;border:1px solid #D7DEE8;border-radius:10px;padding:13px 14px;font-size:15px;color:#6B7483;background:#F4F6F9}
+.kf-select .chev,.kf-date .chev{color:#9AA3B2;display:grid;place-items:center}
+.kf-radios{display:flex;flex-wrap:wrap;gap:14px 28px}
+.kf-radio{display:flex;align-items:center;gap:10px;font-size:15px;color:#6B7483}
+.kf-dot{width:22px;height:22px;border-radius:50%;border:2px solid #CBD2DC;flex:none;display:grid;place-items:center}
+.kf-dot.on{border-color:var(--pri)}
+.kf-dot.on::after{content:"";width:11px;height:11px;border-radius:50%;background:var(--pri)}
+.kf-sec{height:8px;background:#F1F3F6;border-top:1px solid #EAEDF2;border-bottom:1px solid #EAEDF2}
+.kf-sec-title{font-size:16px;font-weight:800;color:#13233B;margin:0}
+.kf-sec-sub{font-size:13px;color:var(--tx2);margin:3px 0 0;line-height:1.4}
+.kf-cta{margin-top:6px}
 
 /* stepper article page */
 .step-item{display:flex;gap:12px;position:relative}
@@ -250,13 +323,47 @@ details[open] summary::after{transform:rotate(-135deg)}
 .tips-ic{font-size:16px;flex:none;margin-top:1px}
 .tips-txt{font-size:13px;color:var(--tx2);line-height:1.45}
 
-/* referral standout */
-.ref-card.standout{background:linear-gradient(135deg,#E8F0FE 0%,#DBEAFE 100%);border:1.5px solid #93C5FD;box-shadow:0 2px 8px rgba(30,123,224,.18)}
-.ref-amt{font-size:22px;font-weight:700;color:var(--brand);margin:6px 0 2px;font-variant-numeric:tabular-nums}
-.ref-rate{font-size:13px;color:var(--tx2);margin-bottom:8px}
+/* referral v2 */
+.ref2-card{padding:20px 18px}
+.ref2-illus{width:130px;height:130px;display:block;margin:0 auto 14px}
+.ref2-title{font-size:22px;font-weight:800;color:#13233B;margin:0 0 10px;line-height:1.22}
+.ref2-body{font-size:14px;line-height:1.5;margin:0 0 12px}
+
+/* lenders page */
+.lp-header{display:flex;align-items:center;background:#fff;box-shadow:none;padding:14px 12px;position:sticky;top:0;z-index:3}
+.lp-header .pg-back{background:transparent;color:var(--tx)}
+.lp-htitle{flex:1;text-align:center;font-size:17px;font-weight:700;color:var(--tx);margin-right:34px}
+.lp-body{background:#fff;padding:4px 16px 20px;min-height:100%}
+.lp-h1{font-size:22px;font-weight:800;color:#13233B;margin:8px 0 4px;line-height:1.2}
+.lp-sub{font-size:14px;color:var(--tx2);margin:0 0 16px;line-height:1.45}
+.lp-card{background:#fff;border-radius:16px;padding:16px;margin-bottom:14px;box-shadow:0 1px 6px rgba(20,35,59,.08)}
+.lp-top{display:flex;align-items:center;gap:12px;margin-bottom:10px}
+.lp-logo{width:44px;height:44px;border-radius:50%;object-fit:cover;flex:none;background:#F0F3F7}
+.lp-name{font-size:16px;font-weight:700;color:#13233B;line-height:1.2}
+.lp-type{font-size:13px;color:var(--tx2)}
+.lp-amtlbl{font-size:13px;color:var(--tx2)}
+.lp-amt{font-size:22px;font-weight:800;color:#13233B;margin:1px 0 12px;font-variant-numeric:tabular-nums}
+.lp-row{display:flex;align-items:center;gap:12px}
+.lp-col{display:flex;flex-direction:column;gap:2px}
+.lp-col.tenor{min-width:82px}
+.lp-col.rate{flex:1}
+.lp-k{font-size:12px;color:var(--tx2)}
+.lp-v{font-size:14px;font-weight:600;color:var(--tx)}
+.lp-btn{flex:none;height:40px;padding:0 18px;border:0;border-radius:10px;background:var(--pri);color:#fff;font:700 14px/1 Roboto,sans-serif;cursor:pointer}
+.lp-foot{font-size:12px;color:var(--tx2);text-align:center;margin:6px 0 0;line-height:1.4}
 
 /* risk profile illustration */
 .rp-illus{width:100%;height:80px;border-radius:10px;background:linear-gradient(135deg,#FFF3E0 0%,#FEE2E2 50%,#E8F5E2 100%);margin-bottom:8px;display:grid;place-items:center;font-size:32px}
+/* risk gauge card */
+.rp2-card{padding:16px}
+.rp2-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:4px}
+.rp2-title{font-size:18px;font-weight:800;color:#13233B}
+.rp2-gauge{position:relative;margin:4px 0 2px}
+.rp2-pill{position:absolute;left:50%;bottom:6px;transform:translateX(-50%);font-size:14px;font-weight:800;letter-spacing:.03em;border-radius:999px;padding:8px 20px;white-space:nowrap}
+.rp2-pill.low{background:#E8F5E2;color:#2E7D32}
+.rp2-pill.medium{background:#FDEBCF;color:#B45309}
+.rp2-pill.high{background:#FEE2E2;color:#C0343F}
+.rp2-sub{font-size:14px;color:#3F4A5A;text-align:center;line-height:1.5;margin:10px 4px 14px}
 
 /* loan slider */
 .ln-row{display:flex;justify-content:space-between;align-items:baseline;margin-top:14px}
@@ -278,12 +385,77 @@ details[open] summary::after{transform:rotate(-135deg)}
 .inst dd{margin:0;text-align:right;font-variant-numeric:tabular-nums;color:var(--tx)}
 .ln-cta{margin-top:16px}
 .ln-dis{font-size:12px;color:var(--tx2);margin:8px 0 0;text-align:center}
+.ln-reminder{display:flex;gap:8px;align-items:flex-start;background:#FFF8E1;border-radius:10px;padding:10px 12px;margin-top:10px;font-size:12.5px;color:var(--tx);line-height:1.45}
+.ln-reminder svg{flex:none;margin-top:1px;color:#F59E0B}
+/* slider v2 */
+.sl-card{padding:18px 16px}
+.sl-greet{font-size:20px;font-weight:800;color:#141414;line-height:1.3;margin:0 0 18px}
+.sl-row{display:flex;align-items:baseline;justify-content:space-between;gap:10px;margin-bottom:6px}
+.sl-lbl{font-size:15px;font-weight:600;color:var(--tx)}
+.sl-val{font-size:19px;font-weight:800;color:#141414;font-variant-numeric:tabular-nums}
+.sl-track{display:flex;align-items:center;gap:12px}
+.sl-track .rng{flex:1}
+.sl-end{font-size:14px;color:var(--tx2);font-variant-numeric:tabular-nums;flex:none;min-width:16px;text-align:center}
+.sl-div{border-top:1.5px dashed #D3D9E2;margin:18px 0}
+.sl-cic{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.sl-cic-label{font-size:15px;font-weight:700;color:var(--tx)}
+.sl-pill{font-size:20px;font-weight:800;color:var(--pri);background:#EAF7E6;border-radius:12px;padding:8px 16px;font-variant-numeric:tabular-nums}
+.sl-bd{margin:10px 0 0;display:grid;grid-template-columns:1fr auto;gap:4px 8px;font-size:12px;color:var(--tx2)}
+.sl-bd dd{margin:0;text-align:right;font-variant-numeric:tabular-nums;color:var(--tx)}
+.sl-field-label{font-size:15px;font-weight:700;color:var(--tx);margin-bottom:8px;display:block}
+.sl-select{display:flex;align-items:center;justify-content:space-between;border:1px solid #D7DEE8;border-radius:10px;padding:13px 14px;font-size:15px;color:#9AA3B2;background:#fff}
+.sl-select .chev{color:#9AA3B2;display:grid;place-items:center;transform:rotate(90deg)}
+.sl-card .rng::-webkit-slider-thumb{width:24px;height:24px;border-width:3px;margin-top:-9px}
+.sl-card .rng::-moz-range-thumb{width:18px;height:18px}
+/* reminder */
+.rm-card{padding:16px}
+.rm-top{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:10px}
+.rm-lbl{font-size:14px;color:var(--tx2)}
+.rm-days{font-size:26px;font-weight:800;color:#141414;margin-top:2px}
+.rm-date{font-size:14px;color:var(--tx2)}
+.rm-bar{height:7px;border-radius:999px;background:#E3F0FB;overflow:hidden;margin-bottom:16px}
+.rm-fill{height:100%;border-radius:999px;background:var(--brand)}
+.rm-row{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.rm-rlbl{font-size:15px;font-weight:700;color:var(--tx)}
+.rm-rdesc{font-size:13px;color:var(--tx2);margin-top:1px}
+.rm-row .act-toggle{width:46px;height:27px}
+.rm-row .act-toggle::after{width:23px;height:23px}
+.rm-row .act-toggle.on::after{transform:translateX(19px)}
+/* banner julo */
+.bj-card{position:relative;background:#DADCF7;border-radius:16px;padding:18px 16px;overflow:hidden;min-height:118px}
+.bj-txt{max-width:64%}
+.bj-title{font-size:17px;font-weight:800;color:#141414;margin:0 0 8px}
+.bj-body{font-size:14px;color:#2B3342;line-height:1.5;margin:0}
+.bj-brand{color:var(--pri);font-weight:700}
+.bj-mascot{position:absolute;right:4px;top:50%;transform:translateY(-50%);width:120px;height:120px}
+/* tips */
+.tp-card{background:#FFF7E0;border-radius:16px;padding:18px 16px}
+.tp-head{display:flex;align-items:center;gap:12px;margin-bottom:16px}
+.tp-bulb{width:48px;height:48px;flex:none;display:grid;place-items:center}
+.tp-bulb img{width:48px;height:48px}
+.tp-title{font-size:17px;font-weight:800;color:#141414;margin:0}
+.tp-row{display:flex;align-items:flex-start;gap:14px;margin-bottom:16px}
+.tp-row:last-child{margin-bottom:0}
+.tp-icwrap{position:relative;flex:none}
+.tp-num{position:absolute;top:-6px;left:-6px;width:22px;height:22px;border-radius:50%;background:var(--pri);color:#fff;font-size:12px;font-weight:800;display:grid;place-items:center;z-index:1}
+.tp-ic{width:52px;height:52px;display:grid;place-items:center}
+.tp-ic img{width:52px;height:52px}
+.tp-txt{font-size:14px;color:#2B3342;line-height:1.45;margin:0;padding-top:5px}
 
 /* preapproved */
 .pre-lbl{font-size:13px;color:var(--tx2);display:flex;align-items:center;gap:6px}
 .pre-amt{font-size:26px;font-weight:700;color:var(--tx);margin:4px 0 2px;font-variant-numeric:tabular-nums;letter-spacing:-.01em}
 .pre .c-body{margin-bottom:16px}
 .chip-ok{font-size:11px;font-weight:500;color:var(--pri);background:color-mix(in srgb,var(--pri) 12%,#fff);border-radius:999px;padding:2px 8px}
+/* preapproved v2 */
+.pa-card{padding:0;overflow:hidden}
+.pa-top{position:relative;background:linear-gradient(135deg,#EDE7FB 0%,#F3EFFB 45%,#FBFCFE 100%);padding:18px 16px 20px;border-radius:var(--r) var(--r) 16px 16px;min-height:132px}
+.pa-illus{position:absolute;top:4px;right:2px;width:112px;height:104px;object-fit:contain}
+.pa-badge{display:inline-block;font-size:13px;font-weight:700;color:var(--pri);background:#E3F3DD;border-radius:999px;padding:5px 14px;margin-bottom:10px}
+.pa-label{font-size:16px;color:var(--tx2);font-weight:500}
+.pa-amt{font-size:29px;font-weight:800;color:#141414;margin-top:3px;font-variant-numeric:tabular-nums;letter-spacing:-.02em}
+.pa-body{font-size:14px;color:#3F4A5A;line-height:1.55;margin:14px 16px 16px}
+.pa-card .btn.filled{width:calc(100% - 32px);margin:0 16px 16px}
 
 .ovl{position:absolute;inset:0;background:rgba(0,0,0,.45);display:grid;place-items:center;padding:24px;z-index:10}
 .mdl{background:#fff;border-radius:var(--r);padding:24px 20px 16px;text-align:center;width:100%;max-width:300px}
@@ -353,28 +525,31 @@ dialog textarea{width:100%;height:320px;background:var(--c-field);border:1px sol
 
 <script>
 const DEFAULTS = {
-  order:["hope","actions","literacy","score","referral","rejection","riskprofile","lockedlimit","slider","preapproved"],
-  show:{hope:true, actions:true, literacy:true, score:true, referral:false, rejection:false, riskprofile:false, lockedlimit:false, slider:false, preapproved:false},
+  order:["hope","actions","literacy","score","referral","riskprofile","slider","preapproved","reminder","banner_julo","tips"],
+  show:{hope:true, actions:true, literacy:true, score:true, referral:false, riskprofile:false, slider:false, preapproved:false, reminder:false, banner_julo:false, tips:false},
   theme:{primary:"#46A000", brand:"#1E7BE0", background:"#F0F6FD", text:"#212121", muted:"#616161", warning:"#FFB35C", cardRadius:16, buttonRadius:6},
   hope:{title:"Masih ada kesempatan untukmu", body:"Profil kredit kamu belum memenuhi kriteria saat ini.", image:"assets/hope.svg"},
-  actions:{title:"Langkah selanjutnya",
-    step1Label:"Lengkapi Profil", step1Type:"link", step1Done:false,
-    step2Label:"Working Reminder", step2Type:"toggle", step2On:false,
-    step3Label:"Allow Device Data Permission", step3Type:"link", step3Done:false},
-  literacy:{tag:"Tips Keuangan", title:"Cara Meningkatkan Skor Kreditmu", body:"Pelajari langkah-langkah sederhana untuk memperbaiki profil kreditmu.", cta:"Baca Selengkapnya"},
+  actions:{title:"Siapkan pengajuan berikutnya",
+    step1Label:"Ingatkan saya saat waktunya", step1Desc:"Notifikasi H-1 dan pada 20 Nov", step1On:false,
+    step2Label:"Perbaharui data pribadi", step2Desc:"Pekerjaan, penghasilan, alamat · ±3 menit", step2Btn:"Perbarui", step2Done:false,
+    step3Label:"Izinkan akses yang diperlukan", step3Desc:"Membantu kami menilai lebih akurat", step3Btn:"Atur", step3Done:false,
+    note:"Langkah ini membantu penilaian berikutnya, tapi tidak menjamin pengajuan disetujui."},
+  literacy:{tag:"Tips Keuangan", title:"Cara Meningkatkan Skor Kreditmu", body:"Pelajari langkah-langkah sederhana untuk memperbaiki profil kreditmu.", cta:"Baca Selengkapnya", image:"assets/skor-kredit.png", pageTitle:"Cara Meningkatkan Skor Kredit"},
   score:{value:580, maxValue:850, label:"Skor Kredit", statusGoodMin:700, statusFairMin:550,
     progressTitle:"Progres Peningkatan Skor", progressValue:65, progressLabel:"65% menuju target"},
-  referral:{partner:"Adakami", badge:"Partner", title:"Rekomendasi untukmu",
-    body:"Kamu juga bisa mengajukan pinjaman di Adakami, platform terpercaya partner kami.",
-    amount:8000000, rate:"2",
-    cta:"Lihat di Adakami", url:"https://www.adakami.id"},
+  referral:{title:"Masih ada pilihan untukmu",
+    body:"Skor kreditmu saat ini belum memenuhi persyaratan pengajuan di sini.",
+    body2:"Kamu bisa menjelajahi pilihan pinjaman di aplikasi lain sesuai kebutuhan dan kemampuanmu.",
+    cta:"Rekomendasi Pinjaman"},
   rejection:{title:"Pengajuanmu belum disetujui",
     reason:"Skor kredit belum memenuhi syarat minimum.",
     act1Label:"Lengkapi data profil", act1Desc:"Pastikan semua data diri terisi lengkap dan benar.", act1Done:false,
     act2Label:"Tingkatkan skor kredit", act2Desc:"Bayar tagihan tepat waktu dan kurangi utang aktif.", act2Done:false,
     act3Label:"Tunggu 30 hari", act3Desc:"Kamu bisa mengajukan ulang setelah 30 hari dari penolakan.", act3Done:false,
     cta:"Perbaiki Sekarang"},
-  riskprofile:{title:"Profil Risiko Kamu",
+  riskprofile:{title:"Profil Risiko Kamu", level:"medium",
+    summary:"Penghasilan belum mencukupi atau tidak memiliki pekerjaan tetap.",
+    cta:"Pelajari Profil Risiko",
     r1Label:"Risiko kredit", r1Desc:"Tidak memiliki riwayat kredit atau riwayat kredit sebelumnya kurang baik.", r1Level:"high",
     r2Label:"Risiko pengajuan", r2Desc:"Penghasilan belum mencukupi atau tidak memiliki pekerjaan tetap.", r2Level:"medium",
     r3Label:"Risiko utang", r3Desc:"Jumlah utang melebihi penghasilan.", r3Level:"low",
@@ -386,16 +561,25 @@ const DEFAULTS = {
     reason:"Verifikasi data belum lengkap.",
     reapplyDate:"2026-11-15",
     cta:"Buka Limit Saya"},
-  slider:{title:"Ajukan pinjaman lagi", amountLabel:"Jumlah pinjaman", minAmt:2, maxAmt:30, stepAmt:0.5, defAmt:10,
-    tenorLabel:"Lama pinjaman", minTen:6, maxTen:30, stepTen:1, defTen:12, rate:3, showBreakdown:true,
-    ctaLabel:"Ajukan Pinjaman Lagi", ctaEnabled:true, disabledNote:"Perbaharui datamu dulu untuk mengajukan pinjaman lagi."},
+  slider:{title:"Hi Bagus, ayo ajukan pinjaman lagi!", amountLabel:"Jumlah Pinjaman", minAmt:2, maxAmt:30, stepAmt:0.5, defAmt:30,
+    tenorLabel:"Lama Pinjaman", minTen:6, maxTen:30, stepTen:1, defTen:30, rate:3, showBreakdown:false,
+    purposeLabel:"Tujuan Dana Pinjaman",
+    ctaLabel:"Ajukan Pinjaman Lagi", ctaType:"enabled", disabledNote:"Perbaharui datamu dulu untuk mengajukan pinjaman lagi."},
   preapproved:{label:"Limit pra-disetujui", badge:"Khusus kamu", amount:15000000, body:"Ajukan tanpa isi ulang data. Limit berlaku untuk pengajuan berikutnya.",
-    cta:"Ajukan Sekarang", date:"2026-11-26", modalTitle:"Belum bisa mengajukan", modalBtn:"Mengerti"}
+    cta:"Ajukan Sekarang", date:"2026-11-26", modalTitle:"Belum bisa mengajukan", modalBtn:"Mengerti"},
+  reminder:{label:"Ajukan kembali dalam", days:25, dateLabel:"12 Nov 2026", progress:8,
+    reminderLabel:"Ingatkan Saya", reminderDesc:"Notifikasi H-1 dan pada 12 Nov", on:false},
+  banner_julo:{title:"Penilaianmu Bisa Berubah", body:"Jangan hapus Tunaiku agar tidak ketinggalan informasi pengajuan ulang", brand:"Tunaiku"},
+  tips:{title:"Tips Untuk pengajuan berikutnya",
+    t1:"Cek jadwal pengajuan kembali di aplikasi Tunaiku secara berkala",
+    t2:"Izinkan akses yang diperlukan untuk meningkatkan skor kamu",
+    t3:"Tingkatkan skor kredit kamu agar pengajuan selanjutnya diterima"}
 };
 const NAMES = {hope:"Hope card", actions:"Grouped Action Step", literacy:"Financial Literacy", score:"Score & Progress",
-  referral:"Rekomendasi Pinjaman Lain", rejection:"Rejection Reason",
-  riskprofile:"Risk Profile", lockedlimit:"Locked Limit",
-  slider:"Loan slider", preapproved:"Preapproved limit"};
+  referral:"Rekomendasi Pinjaman Lain",
+  riskprofile:"Risk Profile",
+  slider:"Loan slider", preapproved:"Preapproved limit",
+  reminder:"Reminder", banner_julo:"Banner JULO", tips:"Tips"};
 
 const SCHEMA = {
   theme:{n:"Theme (shared)",f:[
@@ -410,23 +594,30 @@ const SCHEMA = {
     {h:"Relative to HTML file. Default: assets/hope.svg"}]},
   actions:{n:NAMES.actions,f:[
     {p:"actions.title",l:"Section title",t:"text"},
-    {s:"Step 1 – Lengkapi Profil"},
+    {s:"Step 1 – Reminder (toggle)"},
     {p:"actions.step1Label",l:"Label",t:"text"},
-    {p:"actions.step1Type",l:"Type",t:"select",o:["link","toggle"]},
-    {p:"actions.step1Done",l:"Completed",t:"bool"},
-    {s:"Step 2 – Working Reminder"},
+    {p:"actions.step1Desc",l:"Description",t:"text"},
+    {p:"actions.step1On",l:"Toggle on",t:"bool"},
+    {s:"Step 2 – Data pribadi"},
     {p:"actions.step2Label",l:"Label",t:"text"},
-    {p:"actions.step2Type",l:"Type",t:"select",o:["toggle","link"]},
-    {p:"actions.step2On",l:"Toggle on",t:"bool"},
-    {s:"Step 3 – Device Data"},
+    {p:"actions.step2Desc",l:"Description",t:"text"},
+    {p:"actions.step2Btn",l:"Button",t:"text"},
+    {p:"actions.step2Done",l:"Completed",t:"bool"},
+    {s:"Step 3 – Izin akses"},
     {p:"actions.step3Label",l:"Label",t:"text"},
-    {p:"actions.step3Type",l:"Type",t:"select",o:["link","toggle"]},
-    {p:"actions.step3Done",l:"Completed",t:"bool"}]},
+    {p:"actions.step3Desc",l:"Description",t:"text"},
+    {p:"actions.step3Btn",l:"Button",t:"text"},
+    {p:"actions.step3Done",l:"Completed",t:"bool"},
+    {s:"Disclaimer"},
+    {p:"actions.note",l:"Note",t:"area"}]},
   literacy:{n:NAMES.literacy,f:[
+    {p:"literacy.image",l:"Image path",t:"text"},
+    {h:"Relative to HTML file. Default: assets/skor-kredit.png"},
     {p:"literacy.tag",l:"Tag label",t:"text"},
     {p:"literacy.title",l:"Title",t:"text"},
     {p:"literacy.body",l:"Body",t:"area"},
-    {p:"literacy.cta",l:"CTA label",t:"text"}]},
+    {p:"literacy.cta",l:"CTA label (no arrow)",t:"text"},
+    {p:"literacy.pageTitle",l:"CTA page title",t:"text"}]},
   score:{n:NAMES.score,f:[
     {p:"score.value",l:"Score value",t:"num",min:0,max:850,step:1},
     {p:"score.maxValue",l:"Max score",t:"num",min:100,max:1000,step:50},
@@ -440,15 +631,11 @@ const SCHEMA = {
     {p:"score.progressValue",l:"Progress %",t:"range",min:0,max:100,u:"%"},
     {p:"score.progressLabel",l:"Label text",t:"text"}]},
   referral:{n:NAMES.referral,f:[
-    {p:"referral.partner",l:"Partner name",t:"text"},
-    {p:"referral.badge",l:"Badge label",t:"text"},
     {p:"referral.title",l:"Title",t:"text"},
-    {p:"referral.body",l:"Body",t:"area"},
-    {p:"referral.amount",l:"Disbursable amount (Rp)",t:"num",min:0,max:500000000,step:500000},
-    {p:"referral.rate",l:"Rate % per month",t:"text"},
+    {p:"referral.body",l:"Body line 1",t:"area"},
+    {p:"referral.body2",l:"Body line 2",t:"area"},
     {p:"referral.cta",l:"CTA label",t:"text"},
-    {p:"referral.url",l:"URL",t:"text"},
-    {h:"Link opened on CTA tap (prototype toast)."}]},
+    {h:"CTA opens P2P lender list page."}]},
   rejection:{n:NAMES.rejection,f:[
     {p:"rejection.title",l:"Title",t:"text"},
     {p:"rejection.reason",l:"Rejection reason",t:"area"},
@@ -468,6 +655,9 @@ const SCHEMA = {
     {p:"rejection.cta",l:"CTA label",t:"text"}]},
   riskprofile:{n:NAMES.riskprofile,f:[
     {p:"riskprofile.title",l:"Title",t:"text"},
+    {p:"riskprofile.level",l:"Overall risk (gauge)",t:"select",o:["low","medium","high"]},
+    {p:"riskprofile.summary",l:"Summary line",t:"area"},
+    {p:"riskprofile.cta",l:"CTA label",t:"text"},
     {s:"Risiko kredit"},
     {p:"riskprofile.r1Label",l:"Label",t:"text"},
     {p:"riskprofile.r1Desc",l:"Description",t:"text"},
@@ -515,9 +705,28 @@ const SCHEMA = {
     {h:"Placeholder rate. Replace with real pricing."},
     {p:"slider.showBreakdown",l:"Show breakdown",t:"bool"},
     {s:"CTA"},
+    {p:"slider.purposeLabel",l:"Purpose label",t:"text"},
     {p:"slider.ctaLabel",l:"Label",t:"text"},
-    {p:"slider.ctaEnabled",l:"Enabled",t:"bool"},
-    {p:"slider.disabledNote",l:"Note when disabled",t:"area"}]},
+    {p:"slider.ctaType",l:"Button type",t:"select",o:["enabled","disabled"]},
+    {h:"disabled = greyed button + reminder below"},
+    {p:"slider.disabledNote",l:"Reminder (when disabled)",t:"area"}]},
+  reminder:{n:NAMES.reminder,f:[
+    {p:"reminder.label",l:"Top label",t:"text"},
+    {p:"reminder.days",l:"Days left",t:"num",min:0,max:365,step:1},
+    {p:"reminder.dateLabel",l:"Date label",t:"text"},
+    {p:"reminder.progress",l:"Progress %",t:"range",min:0,max:100,u:"%"},
+    {p:"reminder.reminderLabel",l:"Toggle label",t:"text"},
+    {p:"reminder.reminderDesc",l:"Toggle desc",t:"text"},
+    {p:"reminder.on",l:"Toggle on",t:"bool"}]},
+  banner_julo:{n:NAMES.banner_julo,f:[
+    {p:"banner_julo.title",l:"Title",t:"text"},
+    {p:"banner_julo.body",l:"Body",t:"area"},
+    {p:"banner_julo.brand",l:"Highlight word",t:"text"}]},
+  tips:{n:NAMES.tips,f:[
+    {p:"tips.title",l:"Title",t:"text"},
+    {p:"tips.t1",l:"Tip 1",t:"area"},
+    {p:"tips.t2",l:"Tip 2",t:"area"},
+    {p:"tips.t3",l:"Tip 3",t:"area"}]},
   preapproved:{n:NAMES.preapproved,f:[
     {p:"preapproved.label",l:"Label",t:"text"},{p:"preapproved.badge",l:"Badge (empty = hide)",t:"text"},
     {p:"preapproved.amount",l:"Limit (Rp)",t:"num",min:0,max:500000000,step:500000},
@@ -528,7 +737,7 @@ const SCHEMA = {
     {p:"preapproved.modalBtn",l:"Modal button",t:"text"}]}
 };
 
-const KEY="tunaiku-dash-config-v5";
+const KEY="tunaiku-dash-config-v6";
 const clone=o=>JSON.parse(JSON.stringify(o));
 function merge(base,over){
   if(Array.isArray(base)) return Array.isArray(over)?over.filter(x=>base.includes(x)).concat(base.filter(x=>!over.includes(x))):base;
@@ -542,7 +751,7 @@ function set(o,p,v){ const ks=p.split("."), last=ks.pop(); ks.reduce((a,k)=>a[k]
 const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 
 let cfg=load();
-const ui={amt:null,ten:null,modal:false,tips:false,inspect:false,toast:"",page:""};
+const ui={amt:null,ten:null,modal:false,tips:false,inspect:false,toast:"",page:"",profileName:""};
 
 const rp=n=>"Rp"+Math.round(n).toLocaleString("id-ID");
 const jt=x=>"Rp"+(+x).toLocaleString("id-ID",{maximumFractionDigits:2})+" jt";
@@ -569,7 +778,25 @@ const ic={
   help:'<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zm.1 15.6a1.3 1.3 0 1 1 0-2.6 1.3 1.3 0 0 1 0 2.6zm1.4-5c-.7.4-.9.7-.9 1.4v.3h-2v-.4c0-1.3.5-2 1.5-2.6.8-.5 1-.8 1-1.4 0-.6-.5-1.1-1.2-1.1-.8 0-1.3.5-1.4 1.3H8.5c.1-2 1.6-3.2 3.6-3.2 2 0 3.3 1.1 3.3 2.8 0 1.1-.5 1.9-1.9 2.9z"/></svg>',
   user:'<svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="8" r="4.5"/><path d="M3.5 21a8.5 8.5 0 0 1 17 0z"/></svg>',
   check:'<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round"><path d="M5 12l5 5L19 7"/></svg>',
+  info:'<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9.5"/><path d="M12 11v6M12 7.5v.01"/></svg>',
+  arrowL:'<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>',
+  report:'<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/><path d="M12 7v4M12 13.5v.01"/></svg>',
+  signpost:'<svg class="ref2-illus" viewBox="0 0 140 140" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="70" cy="62" r="52" fill="#E8F2FD"/><ellipse cx="70" cy="116" rx="46" ry="7" fill="#DCEBFB"/><path d="M40 108c6-16 18-20 30-20s24 4 30 20z" fill="#EAF4EC"/><g><rect x="66" y="40" width="8" height="70" rx="4" fill="#2F5FAE"/><path d="M64 52H30l-10 9 10 9h34z" fill="#4C8DEE"/><path d="M76 72h34l10 9-10 9H76z" fill="#2F6FD6"/><path d="M40 58h14M40 64h10" stroke="#fff" stroke-width="3" stroke-linecap="round"/><path d="M100 78H86M100 84h-8" stroke="#fff" stroke-width="3" stroke-linecap="round"/><path d="M34 61h-8M30 57l-4 4 4 4" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><path d="M106 81h8M110 77l4 4-4 4" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></g><g fill="#7CC36B"><path d="M108 96c6-2 12 0 14 6-6 2-12 0-14-6z"/><path d="M116 92c2-6 8-9 14-7-2 6-8 9-14 7z"/></g><rect x="112" y="96" width="3" height="16" rx="1.5" fill="#3E8E2E"/><g fill="#8FD07C"><path d="M26 100c-6-2-11 1-12 7 6 2 11-1 12-7z"/></g><circle cx="48" cy="34" r="5" fill="#fff"/><circle cx="56" cy="32" r="6" fill="#fff"/><circle cx="92" cy="40" r="5" fill="#fff"/><circle cx="99" cy="38" r="4" fill="#fff"/></svg>',
+  cal2:'<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><rect x="3.5" y="5" width="17" height="15.5" rx="2.5"/><path d="M3.5 10h17M8 3v4M16 3v4"/></svg>',
+  wallet:'<svg class="pa-illus" viewBox="0 0 120 110" fill="none" xmlns="http://www.w3.org/2000/svg"><g transform="rotate(-8 60 55)"><rect x="52" y="20" width="26" height="36" rx="4" fill="#6FD6B0"/><rect x="66" y="16" width="26" height="36" rx="4" fill="#8FE0C2"/><circle cx="79" cy="34" r="4" fill="#4FB78D"/></g><path d="M74 40h30a4 4 0 014 4v2H74z" fill="#C9C2F5"/><rect x="26" y="44" width="78" height="50" rx="10" fill="#5B8DEF"/><path d="M26 54a10 10 0 0110-10h58a10 10 0 0110 10v4H26z" fill="#6E9BF2"/><rect x="82" y="62" width="26" height="18" rx="6" fill="#4F7BE0"/><circle cx="90" cy="71" r="4" fill="#F6C7B8"/><path d="M26 60h60v30H36a10 10 0 01-10-10z" fill="#5B8DEF"/><path d="M30 50l45-6" stroke="#4F7BE0" stroke-width="2" stroke-dasharray="3 3" opacity=".5"/><circle cx="74" cy="40" r="11" fill="#48C13E"/><path d="M69 40l3.5 3.5L80 36" stroke="#fff" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M96 20l4-4M103 26l5-3M99 33l5 0" stroke="#B9C3E8" stroke-width="2.4" stroke-linecap="round"/></svg>',
+  okmini:'<svg width="15" height="15" viewBox="0 0 24 24" fill="#2E9E4F"><path d="M12 2a10 10 0 100 20 10 10 0 000-20zm-1 14.4l-4-4L8.4 11l2.6 2.6L15.6 9 17 10.4z"/></svg>',
+  minus:'<svg width="15" height="15" viewBox="0 0 24 24" fill="#9AA3B2"><path d="M12 2a10 10 0 100 20 10 10 0 000-20zM7 11h10v2H7z"/></svg>',
+  pCam:'<svg width="20" height="20" viewBox="0 0 24 24" fill="#2F6FD6"><path d="M9 3l-1.5 2H4a2 2 0 00-2 2v11a2 2 0 002 2h16a2 2 0 002-2V7a2 2 0 00-2-2h-3.5L15 3zm3 5.5A4.5 4.5 0 1112 17a4.5 4.5 0 010-8.5z"/></svg>',
+  pFolder:'<svg width="20" height="20" viewBox="0 0 24 24" fill="#2F6FD6"><path d="M10 4H4a2 2 0 00-2 2v12a2 2 0 002 2h16a2 2 0 002-2V8a2 2 0 00-2-2h-8z"/></svg>',
+  pContact:'<svg width="20" height="20" viewBox="0 0 24 24" fill="#2F6FD6"><path d="M6 2a2 2 0 00-2 2v16a2 2 0 002 2h13a1 1 0 001-1V3a1 1 0 00-1-1zm7 5a2.5 2.5 0 110 5 2.5 2.5 0 010-5zm-4 10c0-2 2.5-3 4-3s4 1 4 3zM2 6h2v2H2zm0 5h2v2H2zm0 5h2v2H2z"/></svg>',
+  pBell:'<svg width="20" height="20" viewBox="0 0 24 24" fill="#2F6FD6"><path d="M12 22a2.5 2.5 0 002.45-2h-4.9A2.5 2.5 0 0012 22zm7-5l-1.5-1.8V10a5.5 5.5 0 00-4-5.3V4a1.5 1.5 0 00-3 0v.7A5.5 5.5 0 006.5 10v5.2L5 17a1 1 0 00.8 1.6h12.4A1 1 0 0019 17z"/></svg>',
+  pPin:'<svg width="20" height="20" viewBox="0 0 24 24" fill="#2F6FD6"><path d="M12 2a7 7 0 00-7 7c0 5 7 13 7 13s7-8 7-13a7 7 0 00-7-7zm0 9.5A2.5 2.5 0 1112 6.5a2.5 2.5 0 010 5z"/></svg>',
+  pPhone:'<svg width="20" height="20" viewBox="0 0 24 24" fill="#2F6FD6"><path d="M6.6 10.8a15 15 0 006.6 6.6l2.2-2.2a1 1 0 011-.24 11 11 0 003.4.55 1 1 0 011 1V20a1 1 0 01-1 1A17 17 0 013 4a1 1 0 011-1h3.5a1 1 0 011 1 11 11 0 00.55 3.4 1 1 0 01-.24 1z"/></svg>',
   chevron:'<svg width="8" height="12" viewBox="0 0 8 12" fill="none" stroke="#9CA3AF" stroke-width="2" stroke-linecap="round"><path d="M1 1l5 5-5 5"/></svg>',
+  tCal:'<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#2E9E4F" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4.5" width="18" height="16" rx="2.5"/><path d="M3 9h18M8 2.5v4M16 2.5v4"/><path d="M15.5 15.5a2.8 2.8 0 1 1-.8-2.5M15 11v2.2h-2.2"/></svg>',
+  tShield:'<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#2E9E4F" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="2.5" width="12" height="19" rx="2.5"/><path d="M9.2 11.5l1.8 1.8 3.8-3.8"/></svg>',
+  tGauge:'<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#2E9E4F" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 17a8 8 0 1 1 16 0"/><path d="M12 17l3.5-4.5"/><path d="M12 7v-.5M5.5 10l-.4-.3M18.5 10l.4-.3"/></svg>',
+  mascot:'<svg class="bj-mascot" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg"><ellipse cx="58" cy="110" rx="30" ry="5" fill="#000" opacity=".12"/><path d="M40 70c-6 6-10 14-9 20" stroke="#39A850" stroke-width="5" stroke-linecap="round" fill="none"/><path d="M34 96l-6 6M46 96l2 8" stroke="#2E8B3E" stroke-width="6" stroke-linecap="round"/><ellipse cx="30" cy="104" rx="8" ry="4" fill="#fff" stroke="#2E8B3E" stroke-width="2"/><ellipse cx="50" cy="106" rx="8" ry="4" fill="#fff" stroke="#2E8B3E" stroke-width="2"/><g transform="rotate(-10 55 50)"><rect x="34" y="18" width="46" height="72" rx="12" fill="#39A850"/><rect x="40" y="24" width="34" height="60" rx="7" fill="#fff"/><circle cx="48" cy="40" r="3" fill="#2E8B3E"/><circle cx="66" cy="40" r="3" fill="#2E8B3E"/><path d="M50 48q7 6 14 0" stroke="#2E8B3E" stroke-width="2.5" fill="none" stroke-linecap="round"/><path d="M62 62a7 7 0 1 1-2-5l3-2m0 0v4h-4" stroke="#39A850" stroke-width="2.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/></g><path d="M84 54c5 2 10 0 13-4" stroke="#39A850" stroke-width="5" stroke-linecap="round" fill="none"/><circle cx="96" cy="34" r="15" fill="#5CC46A"/><path d="M96 27a5 5 0 0 1 5 5c0 4 2 5 2 6H89c0-1 2-2 2-6a5 5 0 0 1 5-5zM94 44a2.2 2.2 0 0 0 4 0" fill="#fff"/><path d="M108 24l3-3M110 32l4-1M107 16l1-4" stroke="#8ED89A" stroke-width="2.4" stroke-linecap="round"/></svg>',
   book:'<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>',
   handshake:'<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20.5 11H17l-3-4-2.5 2L14 12l-1 4-3-2-3.5 2"/><path d="M2 11h3.5"/><path d="M22 11l-4 6h-4l-1.5-2"/><path d="M6 7l4-3 6 4"/></svg>'
 };
@@ -580,35 +807,43 @@ const C={
     return '<div class="card"><div class="hope"><img class="hope-img" src="'+esc(c.image)+'" alt="Hope" onerror="this.style.display=\'none\'"><div class="hope-txt"><p class="c-title">'+esc(c.title)+'</p><p class="c-body">'+esc(c.body)+'</p></div></div></div>'; },
 
   actions(){ const a=cfg.actions;
-    function row(label,type,done,on,idx){
-      const icClass=idx===1?"profile":idx===2?"reminder":"device";
-      const icTxt=idx===1?'\u{1F464}':idx===2?'\u{23F0}':'\u{1F4F1}';
-      var right='';
-      if(type==="toggle") right='<div class="act-toggle'+(on?" on":"")+'" data-act="toggle" data-idx="'+idx+'"></div>';
-      else { var pg=idx===1?"profile":idx===3?"permissions":""; right='<span class="act-arrow" '+(pg?'data-act="page" data-v="'+pg+'"':'')+'>'+ic.chevron+'</span>'; }
-      return '<div class="act-item" '+(type!=="toggle"&&(idx===1||idx===3)?'data-act="page" data-v="'+(idx===1?"profile":"permissions")+'" style="cursor:pointer"':'')+'><div class="act-ic '+icClass+'">'+icTxt+'</div><span class="act-label">'+esc(label)+'</span>'+right+'</div>';
+    const done=[!!a.step1On,!!a.step2Done,!!a.step3Done], n=done.filter(Boolean).length;
+    function step(i,label,desc,right){
+      return '<div class="ga-step"><span class="ga-num'+(done[i-1]?" done":"")+'">'+(done[i-1]?ic.check:i)+'</span><div class="ga-txt"><div class="ga-lbl">'+esc(label)+'</div><div class="ga-desc">'+esc(desc)+'</div></div>'+right+'</div>';
     }
-    return '<div class="card" style="padding:12px 16px"><p class="c-title" style="margin-bottom:4px">'+esc(a.title)+'</p><div class="act-list">'+
-      row(a.step1Label,a.step1Type,a.step1Done,false,1)+
-      row(a.step2Label,a.step2Type,false,a.step2On,2)+
-      row(a.step3Label,a.step3Type,a.step3Done,false,3)+
+    return '<div class="ga-wrap"><div class="card ga-card"><div class="ga-head"><span class="ga-title">'+esc(a.title)+'</span><span class="ga-badge'+(n===3?" all":"")+'">'+n+' dari 3 siap</span></div>'+
+      step(1,a.step1Label,a.step1Desc,'<div class="act-toggle'+(a.step1On?" on":"")+'" data-idx="1" role="switch" aria-checked="'+!!a.step1On+'"></div>')+
+      step(2,a.step2Label,a.step2Desc,'<button class="ga-btn" data-act="page" data-v="profile">'+esc(a.step2Btn)+'</button>')+
+      step(3,a.step3Label,a.step3Desc,'<button class="ga-btn" data-act="page" data-v="permissions">'+esc(a.step3Btn)+'</button>')+
+      (a.note?'<div class="ga-note">'+ic.info+'<span>'+esc(a.note)+'</span></div>':'')+
       '</div></div>'; },
 
   literacy(){ const l=cfg.literacy;
-    return '<div class="card lit-card" data-act="page" data-v="literacy" style="cursor:pointer"><div class="lit-img">'+ic.book+'</div><div class="lit-tag">'+esc(l.tag)+'</div><p class="c-title">'+esc(l.title)+'</p><p class="c-body" style="margin-bottom:10px">'+esc(l.body)+'</p><button class="btn link" data-act="page" data-v="literacy">'+esc(l.cta)+'</button></div>'; },
+    return '<div class="card lit-card" data-act="page" data-v="literacy" style="cursor:pointer">'+
+      '<img class="lit-hero" src="'+esc(l.image)+'" alt="" onerror="this.style.display=\'none\'">'+
+      '<span class="lit-tag">'+esc(l.tag)+'</span>'+
+      '<p class="lit-title">'+esc(l.title)+'</p>'+
+      '<p class="c-body lit-body">'+esc(l.body)+'</p>'+
+      '<div class="lit-div"></div>'+
+      '<button class="lit-cta" data-act="page" data-v="literacy">'+esc(l.cta)+'</button></div>'; },
 
   score(){ const s=cfg.score, v=+s.value, mx=+s.maxValue, pv=+s.progressValue;
-    const circ=2*Math.PI*42, offset=circ*(1-Math.min(v/mx,1));
+    const fill=Math.min(Math.max(v/mx*50,10),92);
     const status=v>=s.statusGoodMin?"good":v>=s.statusFairMin?"fair":"poor";
     const statusTxt=status==="good"?"Baik":status==="fair"?"Cukup":"Perlu Ditingkatkan";
-    return '<div class="card score-wrap"><div class="score-ring"><svg viewBox="0 0 100 100"><circle class="bg" cx="50" cy="50" r="42"/><circle class="fg" cx="50" cy="50" r="42" stroke-dasharray="'+circ.toFixed(1)+'" stroke-dashoffset="'+offset.toFixed(1)+'"/></svg><div class="score-val">'+v+'</div></div>'+
-      '<div class="score-label">'+esc(s.label)+'</div>'+
-      '<span class="score-status '+status+'">'+statusTxt+'</span>'+
-      '<div class="score-prog"><div class="score-prog-title">'+esc(s.progressTitle)+'</div><div class="prog-bar"><div class="prog-fill" style="width:'+pv+'%"></div></div><div class="prog-label"><span>'+esc(s.progressLabel)+'</span><span>'+pv+'%</span></div></div>'+
-      '<button class="btn filled" style="margin-top:14px" data-act="page" data-v="literacy">Cara Tingkatkan Skor</button></div>'; },
+    const wave='<svg class="sc-wave" viewBox="0 0 160 20" preserveAspectRatio="none"><path d="M0,12 q20,-12 40,0 t40,0 t40,0 t40,0 V20 H0 Z"/></svg>';
+    return '<div class="card score-wrap"><div class="sc-head"><span class="sc-title">'+esc(s.label)+'</span><button class="sc-info" data-act="toast" data-v="Info Skor Kredit" aria-label="Info">'+ic.info+'</button></div>'+
+      '<div class="sc-gwrap sc-'+status+'"><div class="sc-gauge"><div class="sc-liquid" style="--fill:'+fill.toFixed(1)+'%">'+wave+'<svg class="sc-wave b" viewBox="0 0 160 20" preserveAspectRatio="none"><path d="M0,12 q20,-12 40,0 t40,0 t40,0 t40,0 V20 H0 Z"/></svg></div>'+
+      '<div class="sc-center"><div class="sc-val" data-score="'+v+'">'+v+'</div><span class="sc-pill">'+statusTxt+'</span></div></div></div>'+
+      '<div class="score-prog"><div class="sc-prog-head"><span class="score-prog-title">'+esc(s.progressTitle)+'</span><span class="sc-prog-pct">'+pv+'%</span></div><div class="prog-bar"><div class="prog-fill" style="width:'+pv+'%"></div></div><div class="prog-label"><span>'+esc(s.progressLabel)+'</span></div></div>'+
+      '<button class="btn secondary" style="margin-top:14px" data-act="page" data-v="literacy">Cara Tingkatkan Skor</button></div>'; },
 
   referral(){ const r=cfg.referral;
-    return '<div class="card ref-card standout"><div class="ref-top"><div class="ref-ic">'+ic.handshake+'</div><div class="ref-info"><span class="ref-partner">'+esc(r.partner)+'</span>'+(r.badge?'<span class="chip-ok" style="margin-left:6px">'+esc(r.badge)+'</span>':'')+'</div></div><p class="c-title" style="margin-top:10px">'+esc(r.title)+'</p><div class="ref-amt">'+rp(r.amount)+'</div><div class="ref-rate">Mulai dari '+esc(r.rate)+'% per bulan</div><p class="c-body" style="margin-bottom:12px">'+esc(r.body)+'</p><button class="btn filled" style="background:var(--brand)" data-act="toast" data-v="'+esc(r.cta)+' → '+esc(r.url)+'">'+esc(r.cta)+'</button></div>'; },
+    return '<div class="card ref2-card">'+ic.signpost+
+      '<p class="ref2-title">'+esc(r.title)+'</p>'+
+      '<p class="c-body ref2-body">'+esc(r.body)+'</p>'+
+      '<p class="c-body ref2-body">'+esc(r.body2)+'</p>'+
+      '<button class="btn secondary" data-act="page" data-v="lenders">'+esc(r.cta)+'</button></div>'; },
 
   rejection(){ const j=cfg.rejection;
     function actRow(label,desc,done){
@@ -618,35 +853,59 @@ const C={
       actRow(j.act1Label,j.act1Desc,j.act1Done)+actRow(j.act2Label,j.act2Desc,j.act2Done)+actRow(j.act3Label,j.act3Desc,j.act3Done)+
       '</div><button class="btn filled" style="margin-top:12px" data-act="toast" data-v="'+esc(j.cta)+'">'+esc(j.cta)+'</button></div>'; },
 
-  riskprofile(){ const c=cfg.riskprofile;
-    function riskRow(label,desc,level){
-      var color=level==="high"?"#E8505B":level==="medium"?"#F59E0B":"#46A000";
-      var bg=level==="high"?"#FEE2E2":level==="medium"?"#FFF3E0":"#E8F5E2";
-      var text=level==="high"?"Tinggi":level==="medium"?"Sedang":"Rendah";
-      return '<div class="rp-row"><div class="rp-row-left"><span class="rp-label">'+esc(label)+'</span><span class="rp-desc">'+esc(desc)+'</span></div><span class="rp-badge" style="background:'+bg+';color:'+color+'">'+text+'</span></div>';
-    }
-    return '<div class="card rp-card"><div class="rp-illus">\u{1F4CA}</div><p class="c-title">'+esc(c.title)+'</p><div class="rp-rows">'+
-      riskRow(c.r1Label,c.r1Desc,c.r1Level)+riskRow(c.r2Label,c.r2Desc,c.r2Level)+riskRow(c.r3Label,c.r3Desc,c.r3Level)+
-      riskRow(c.r4Label,c.r4Desc,c.r4Level)+riskRow(c.r5Label,c.r5Desc,c.r5Level)+
-      '</div><button class="btn filled" style="margin-top:12px" data-act="page" data-v="riskdetail">Lihat Detail Profil Risiko</button></div>'; },
+  riskprofile(){ const c=cfg.riskprofile, lv=c.level||"medium";
+    const f=lv==="low"?0.2:lv==="high"?0.95:0.72;
+    const label=lv==="low"?"RISIKO RENDAH":lv==="high"?"RISIKO TINGGI":"RISIKO SEDANG";
+    const dotc=lv==="low"?"#46A000":lv==="high"?"#E8505B":"#F97316";
+    const R=85, cx=100, cy=100, len=Math.PI*R;
+    const ang=Math.PI-f*Math.PI, dx=cx+R*Math.cos(ang), dy=cy-R*Math.sin(ang);
+    return '<div class="card rp2-card"><div class="rp2-head"><span class="rp2-title">'+esc(c.title)+'</span><button class="sc-info" data-act="toast" data-v="Info Profil Risiko" aria-label="Info">'+ic.info+'</button></div>'+
+      '<div class="rp2-gauge"><svg viewBox="0 0 200 118" width="100%"><defs><linearGradient id="rpg" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#FACC15"/><stop offset="0.55" stop-color="#F59E0B"/><stop offset="1" stop-color="#F97316"/></linearGradient></defs>'+
+      '<path d="M15,100 A85,85 0 0 1 185,100" fill="none" stroke="#E7EAEF" stroke-width="15" stroke-linecap="round"/>'+
+      '<path d="M15,100 A85,85 0 0 1 185,100" fill="none" stroke="url(#rpg)" stroke-width="15" stroke-linecap="round" stroke-dasharray="'+(f*len).toFixed(1)+' '+len.toFixed(1)+'"/>'+
+      '<circle cx="'+dx.toFixed(1)+'" cy="'+dy.toFixed(1)+'" r="11" fill="#fff"/><circle cx="'+dx.toFixed(1)+'" cy="'+dy.toFixed(1)+'" r="7" fill="'+dotc+'"/>'+
+      '</svg><span class="rp2-pill '+lv+'">'+label+'</span></div>'+
+      '<p class="rp2-sub">'+esc(c.summary)+'</p>'+
+      '<button class="btn secondary" data-act="page" data-v="riskdetail">'+esc(c.cta)+'</button></div>'; },
 
   lockedlimit(){ const c=cfg.lockedlimit;
     return '<div class="card ll-card"><div class="ll-top"><span class="ll-lock-ic">\u{1F512}</span><div><div class="ll-label">'+esc(c.label)+(c.badge?'<span class="chip-ok" style="margin-left:6px;background:#FFF3E0;color:#F59E0B">'+esc(c.badge)+'</span>':'')+'</div><div class="ll-amt">'+rp(c.amount)+'</div></div></div><div class="ll-reason">'+esc(c.reason)+'</div><p class="c-body" style="margin-bottom:4px">'+esc(c.body)+'</p><div class="ll-date">Bisa digunakan mulai: <b>'+ddmmyyyy(c.reapplyDate)+'</b></div><button class="btn filled" style="margin-top:12px" data-act="tips">'+esc(c.cta)+'</button></div>'; },
 
   slider(){ const s=cfg.slider, {A,T}=clampUI(), k=calc();
-    return '<div class="card"><p class="c-title">'+esc(s.title)+'</p>'+
-      '<div class="ln-row"><span>'+esc(s.amountLabel)+'</span><b data-o="amt">'+rp(ui.amt*1e6)+'</b></div>'+
-      '<input class="rng" type="range" data-k="amt" min="'+A.min+'" max="'+A.max+'" step="'+A.step+'" value="'+ui.amt+'" style="--pct:'+pct(ui.amt,A.min,A.max)+'" aria-label="'+esc(s.amountLabel)+'">'+
-      '<div class="ln-mm"><span>'+jt(A.min)+'</span><span>'+jt(A.max)+'</span></div>'+
-      '<div class="ln-row"><span>'+esc(s.tenorLabel)+'</span><b data-o="ten">'+ui.ten+' bulan</b></div>'+
-      '<input class="rng" type="range" data-k="ten" min="'+T.min+'" max="'+T.max+'" step="'+T.step+'" value="'+ui.ten+'" style="--pct:'+pct(ui.ten,T.min,T.max)+'" aria-label="'+esc(s.tenorLabel)+'">'+
-      '<div class="ln-mm"><span>'+T.min+' bulan</span><span>'+T.max+' bulan</span></div>'+
-      '<div class="inst"><div class="inst-top"><span>Cicilan per bulan</span><b data-o="cicilan">'+rp(k.cicilan)+'</b></div>'+
-        (s.showBreakdown?'<dl><dt>Pokok per bulan</dt><dd data-o="pokok">'+rp(k.pokok)+'</dd><dt>Bunga per bulan ('+(+s.rate).toLocaleString("id-ID")+'%)</dt><dd data-o="bunga">'+rp(k.bunga)+'</dd><dt>Total pembayaran</dt><dd data-o="total">'+rp(k.total)+'</dd></dl>':"")+'</div>'+
-      '<div class="ln-cta"><button class="btn filled" data-act="toast" data-v="'+esc(s.ctaLabel)+'" '+(s.ctaEnabled?"":"disabled")+'>'+esc(s.ctaLabel)+'</button>'+(!s.ctaEnabled&&s.disabledNote?'<p class="ln-dis">'+esc(s.disabledNote)+'</p>':"")+'</div></div>'; },
+    return '<div class="card sl-card"><p class="sl-greet">'+esc(s.title)+'</p>'+
+      '<div class="sl-row"><span class="sl-lbl">'+esc(s.amountLabel)+'</span><b class="sl-val" data-o="amt">'+ui.amt+' Juta</b></div>'+
+      '<div class="sl-track"><span class="sl-end">'+A.min+'</span><input class="rng" type="range" data-k="amt" min="'+A.min+'" max="'+A.max+'" step="'+A.step+'" value="'+ui.amt+'" style="--pct:'+pct(ui.amt,A.min,A.max)+'" aria-label="'+esc(s.amountLabel)+'"><span class="sl-end">'+A.max+'</span></div>'+
+      '<div class="sl-row" style="margin-top:20px"><span class="sl-lbl">'+esc(s.tenorLabel)+'</span><b class="sl-val" data-o="ten">'+ui.ten+' Bulan</b></div>'+
+      '<div class="sl-track"><span class="sl-end">'+T.min+'</span><input class="rng" type="range" data-k="ten" min="'+T.min+'" max="'+T.max+'" step="'+T.step+'" value="'+ui.ten+'" style="--pct:'+pct(ui.ten,T.min,T.max)+'" aria-label="'+esc(s.tenorLabel)+'"><span class="sl-end">'+T.max+'</span></div>'+
+      '<div class="sl-div"></div>'+
+      '<div class="sl-cic"><span class="sl-cic-label">Cicilan Per Bulan</span><span class="sl-pill" data-o="cicilan">'+rp(k.cicilan)+'</span></div>'+
+      (s.showBreakdown?'<dl class="sl-bd"><dt>Pokok per bulan</dt><dd data-o="pokok">'+rp(k.pokok)+'</dd><dt>Bunga per bulan ('+(+s.rate).toLocaleString("id-ID")+'%)</dt><dd data-o="bunga">'+rp(k.bunga)+'</dd><dt>Total pembayaran</dt><dd data-o="total">'+rp(k.total)+'</dd></dl>':"")+
+      '<div class="sl-div"></div>'+
+      '<label class="sl-field-label">'+esc(s.purposeLabel)+'</label><div class="sl-select">Pilih salah satu<span class="chev">'+ic.chevron+'</span></div>'+
+      '<div class="ln-cta" style="margin-top:16px">'+(s.ctaType==="disabled"
+        ?'<button class="btn filled" disabled>'+esc(s.ctaLabel)+'</button>'+(s.disabledNote?'<div class="ln-reminder">'+ic.info+'<span>'+esc(s.disabledNote)+'</span></div>':"")
+        :'<button class="btn filled" data-act="toast" data-v="'+esc(s.ctaLabel)+'">'+esc(s.ctaLabel)+'</button>')+'</div></div>'; },
 
   preapproved(){ const c=cfg.preapproved;
-    return '<div class="card ll-card"><div class="ll-top"><span class="ll-lock-ic">\u{2705}</span><div><div class="ll-label">'+esc(c.label)+(c.badge?'<span class="chip-ok" style="margin-left:6px;background:#E8F5E2;color:var(--pri)">'+esc(c.badge)+'</span>':'')+'</div><div class="ll-amt">'+rp(c.amount)+'</div></div></div><p class="c-body" style="margin-bottom:4px">'+esc(c.body)+'</p><div class="ll-date">Berlaku hingga: <b>'+ddmmyyyy(c.date)+'</b></div><button class="btn filled" style="margin-top:12px" data-act="modal">'+esc(c.cta)+'</button></div>'; }
+    return '<div class="card pa-card"><div class="pa-top"><img class="pa-illus" src="assets/locked-offer.png" alt="" onerror="this.style.display=\'none\'">'+
+      (c.badge?'<span class="pa-badge">'+esc(c.badge)+'</span>':'')+
+      '<div class="pa-label">'+esc(c.label)+'</div><div class="pa-amt">'+rp(c.amount)+'</div></div>'+
+      '<p class="pa-body">'+esc(c.body)+'</p>'+
+      '<button class="btn filled" data-act="modal">'+esc(c.cta)+'</button></div>'; },
+
+  reminder(){ const c=cfg.reminder;
+    return '<div class="card rm-card"><div class="rm-top"><div><div class="rm-lbl">'+esc(c.label)+'</div><div class="rm-days">'+esc(c.days)+' Hari</div></div><span class="rm-date">'+esc(c.dateLabel)+'</span></div>'+
+      '<div class="rm-bar"><div class="rm-fill" style="width:'+(+c.progress)+'%"></div></div>'+
+      '<div class="rm-row"><div><div class="rm-rlbl">'+esc(c.reminderLabel)+'</div><div class="rm-rdesc">'+esc(c.reminderDesc)+'</div></div><div class="act-toggle'+(c.on?" on":"")+'" data-act="rtoggle" role="switch" aria-checked="'+!!c.on+'"></div></div></div>'; },
+
+  banner_julo(){ const c=cfg.banner_julo;
+    var body=esc(c.body); if(c.brand) body=body.split(esc(c.brand)).join('<span class="bj-brand">'+esc(c.brand)+'</span>');
+    return '<div class="bj-card"><img class="bj-mascot" src="assets/mascot.svg" alt="" onerror="this.style.display=\'none\'"><div class="bj-txt"><p class="bj-title">'+esc(c.title)+'</p><p class="bj-body">'+body+'</p></div></div>'; },
+
+  tips(){ const c=cfg.tips;
+    function row(n,img,txt){ return '<div class="tp-row"><div class="tp-icwrap"><span class="tp-num">'+n+'</span><div class="tp-ic"><img src="assets/'+img+'" alt="" onerror="this.style.display=\'none\'"></div></div><p class="tp-txt">'+esc(txt)+'</p></div>'; }
+    return '<div class="tp-card"><div class="tp-head"><span class="tp-bulb"><img src="assets/Lightbulb.svg" alt="" onerror="this.style.display=\'none\'"></span><p class="tp-title">'+esc(c.title)+'</p></div>'+
+      row(1,"tips-1.svg",c.t1)+row(2,"tips-2.svg",c.t2)+row(3,"tips-3.svg",c.t3)+'</div>'; }
 };
 function modalHTML(){ const c=cfg.preapproved;
   return '<div class="ovl" data-act="close"><div class="mdl" role="dialog" aria-modal="true" aria-label="'+esc(c.modalTitle)+'"><div class="mdl-ic">'+ic.cal+'</div><p class="c-title">'+esc(c.modalTitle)+'</p><p>Kamu dapat mengajukan pinjaman lagi pada <b>'+ddmmyyyy(c.date)+'</b></p><button class="btn filled" data-act="close">'+esc(c.modalBtn)+'</button></div></div>'; }
@@ -664,51 +923,81 @@ function pageHTML(pg){
   if(pg==="permissions") return permissionsPageHTML();
   if(pg==="literacy") return literacyPageHTML();
   if(pg==="riskdetail") return riskDetailPageHTML();
+  if(pg==="lenders") return lendersPageHTML();
   return "";
 }
 function profilePageHTML(){
-  return '<div class="pg-header"><button class="pg-back" data-act="back">\u{2190}</button><span class="pg-title">Lengkapi Profil</span></div><div class="pg-body">'+
-    '<div class="pf-section">Data Pribadi</div>'+
-    '<div class="pf-field"><span class="pf-label">Nama Lengkap</span><div class="pf-val ok">Indra Ferdiyanto</div></div>'+
-    '<div class="pf-field"><span class="pf-label">No. KTP</span><div class="pf-val ok">3374xxxxxxxxxxxx</div></div>'+
-    '<div class="pf-field"><span class="pf-label">Tanggal Lahir</span><div class="pf-val ok">15-03-1990</div></div>'+
-    '<div class="pf-field"><span class="pf-label">Alamat Email</span><div class="pf-val empty">Belum diisi</div></div>'+
-    '<div class="pf-section">Data Pekerjaan</div>'+
-    '<div class="pf-field"><span class="pf-label">Jenis Pekerjaan</span><div class="pf-val ok">Karyawan Swasta</div></div>'+
-    '<div class="pf-field"><span class="pf-label">Nama Perusahaan</span><div class="pf-val empty">Belum diisi</div></div>'+
-    '<div class="pf-field"><span class="pf-label">Penghasilan per Bulan</span><div class="pf-val empty">Belum diisi</div></div>'+
-    '<div class="pf-field"><span class="pf-label">Lama Bekerja</span><div class="pf-val empty">Belum diisi</div></div>'+
-    '<div class="pf-section">Kontak Darurat</div>'+
-    '<div class="pf-field"><span class="pf-label">Nama Kontak</span><div class="pf-val ok">Budi Santoso</div></div>'+
-    '<div class="pf-field"><span class="pf-label">No. Telepon Kontak</span><div class="pf-val ok">0812xxxxxxxx</div></div>'+
-    '<div class="pf-field"><span class="pf-label">Hubungan</span><div class="pf-val empty">Belum diisi</div></div>'+
-    '<button class="btn filled" style="margin-top:8px" data-act="toast" data-v="Simpan Profil">Simpan Perubahan</button></div>';
+  const filled=!!cfg.actions.step2Done;
+  function radio(label,on){ return '<span class="kf-radio"><span class="kf-dot'+(on?" on":"")+'"></span>'+label+'</span>'; }
+  function sel(val){ return '<div class="kf-select">'+esc(val)+'<span class="chev">'+ic.chevron+'</span></div>'; }
+  const nameField = filled
+    ? '<input class="kf-input" value="Indra Ferdiyanto" disabled>'
+    : '<input class="kf-input pf-name" type="text" placeholder="Masukkan nama sesuai KTP" value="'+esc(ui.profileName||"")+'">';
+  return '<div class="pg-header"><button class="pg-back" data-act="back">\u{2190}</button><span class="pg-title">Lengkapi Profil</span></div>'+
+    '<div class="kf-scroll">'+
+    '<h3 class="kf-title">Lengkapi informasi KTPmu dengan benar.</h3>'+
+    '<div class="kf-body">'+
+      '<div class="kf-field"><span class="kf-label">Nama Lengkap</span>'+nameField+'</div>'+
+      '<div class="kf-field"><span class="kf-label">Jenis Kelamin</span><div class="kf-radios">'+radioHTML("Laki-laki",true)+radioHTML("Perempuan",false)+'</div></div>'+
+      '<div class="kf-field"><span class="kf-label">Agama</span>'+sel("Islam")+'</div>'+
+      '<div class="kf-field"><span class="kf-label">Status Pernikahan</span><div class="kf-radios">'+radioHTML("Menikah",false)+radioHTML("Cerai",false)+radioHTML("Belum Menikah",true)+'</div></div>'+
+    '</div>'+
+    '<div class="kf-sec"></div>'+
+    '<div class="kf-body">'+
+      '<div><h4 class="kf-sec-title">Tempat &amp; Tanggal Lahir</h4><p class="kf-sec-sub">Isi tempat dan tanggal lahir sesuai yang tertera di KTP-mu.</p></div>'+
+      '<div class="kf-radios">'+radioHTML("Indonesia",true)+radioHTML("Luar Negeri",false)+'</div>'+
+      '<div class="kf-field"><span class="kf-label">Provinsi</span>'+sel("DKI Jakarta")+'</div>'+
+      '<div class="kf-field"><span class="kf-label">Tanggal Lahir</span><div class="kf-date">15-03-1990<span class="chev">'+ic.cal2+'</span></div></div>'+
+    '</div>'+
+    '<div class="kf-sec"></div>'+
+    '<div class="kf-body">'+
+      '<div><h4 class="kf-sec-title">Alamat KTP</h4><p class="kf-sec-sub">Isi alamat sesuai yang tertera di KTP-mu.</p></div>'+
+      '<div class="kf-field"><span class="kf-label">Provinsi</span>'+sel("DKI Jakarta")+'</div>'+
+      '<button class="btn filled kf-cta" data-act="profilesave" '+((filled||(ui.profileName||"").trim())?"":"disabled")+'>Lanjutkan</button>'+
+    '</div></div>';
 }
+function radioHTML(label,on){ return '<span class="kf-radio"><span class="kf-dot'+(on?" on":"")+'"></span>'+label+'</span>'; }
 function permissionsPageHTML(){
-  function pRow(icon,name,allowed){
-    var st=allowed?"allow":"deny";
-    return '<div class="perm-row"><div class="perm-ic '+st+'">'+icon+'</div><div class="perm-info"><div class="perm-name">'+name+'</div><div class="perm-status '+st+'">'+(allowed?"Diizinkan":"Belum diizinkan")+'</div></div><span class="perm-badge '+st+'">'+(allowed?"Aktif":"Nonaktif")+'</span></div>';
+  const granted=!!cfg.actions.step3Done;
+  function pRow(icon,name,allowed,pending){
+    var on=pending?granted:allowed;
+    var ctrl=pending && !granted
+      ? '<div class="act-toggle perm-toggle" data-act="permgrant" role="switch" aria-checked="false"></div>'
+      : '<span class="perm-badge '+(on?"allow":"deny")+'">'+(on?ic.okmini+' Aktif':ic.minus+' Nonaktif')+'</span>';
+    return '<div class="perm-row"><div class="perm-ic">'+icon+'</div><div class="perm-info"><div class="perm-name">'+name+'</div><div class="perm-status '+(on?"allow":"deny")+'">'+(on?"Diizinkan":"Belum diizinkan")+'</div></div>'+ctrl+'</div>';
   }
   return '<div class="pg-header"><button class="pg-back" data-act="back">\u{2190}</button><span class="pg-title">Izin Perangkat</span></div><div class="pg-body">'+
     '<p class="c-body" style="margin:-4px 0 4px">Izinkan akses berikut untuk meningkatkan peluang persetujuan pinjamanmu.</p>'+
-    pRow('\u{1F4F7}','Kamera',true)+
-    pRow('\u{1F4C1}','Penyimpanan Aplikasi',false)+
-    pRow('\u{1F4D2}','Kontak',false)+
-    pRow('\u{1F514}','Notifikasi',true)+
-    pRow('\u{1F4CD}','Lokasi',false)+
-    pRow('\u{1F4DE}','Log Panggilan',false)+
+    pRow(ic.pCam,'Kamera',true,false)+
+    pRow(ic.pFolder,'Penyimpanan Aplikasi',false,true)+
+    pRow(ic.pContact,'Kontak',true,false)+
+    pRow(ic.pBell,'Notifikasi',true,false)+
+    pRow(ic.pPin,'Lokasi',true,false)+
+    pRow(ic.pPhone,'Log Panggilan',true,false)+
     '</div>';
 }
-function literacyPageHTML(){
-  return '<div class="pg-header"><button class="pg-back" data-act="back">\u{2190}</button><span class="pg-title">Cara Meningkatkan Skor Kredit</span></div><div class="pg-body">'+
-    '<div style="width:100%;height:100px;border-radius:12px;background:linear-gradient(135deg,#E0F2E9 0%,#D4ECFA 100%);display:grid;place-items:center;font-size:36px">\u{1F4C8}</div>'+
-    '<p class="c-body" style="line-height:1.6">Skor kredit menentukan kelayakanmu untuk mendapatkan pinjaman. Berikut langkah-langkah untuk meningkatkannya:</p>'+
-    '<div class="step-item"><div class="step-num">1</div><div class="step-line"></div><div class="step-content"><h4>Perbarui Data Penghasilan</h4><p>Pastikan data penghasilan terbaru sudah diisi dengan benar. Penghasilan yang tercatat lebih tinggi meningkatkan skor kelayakanmu.</p><div class="step-img" style="background:#E8F0FE">\u{1F4B5}</div></div></div>'+
-    '<div class="step-item"><div class="step-num">2</div><div class="step-line"></div><div class="step-content"><h4>Bayar Semua Cicilan Tepat Waktu</h4><p>Riwayat pembayaran tepat waktu adalah faktor terbesar dalam skor kredit. Hindari keterlambatan pembayaran cicilan apapun.</p><div class="step-img" style="background:#E8F5E2">\u{2705}</div></div></div>'+
-    '<div class="step-item"><div class="step-num">3</div><div class="step-line"></div><div class="step-content"><h4>Izinkan Akses Data Perangkat</h4><p>Memberikan izin akses data perangkat membantu verifikasi identitasmu dan meningkatkan kepercayaan platform terhadap profilmu.</p><div class="step-img" style="background:#FFF3E0">\u{1F4F1}</div></div></div>'+
-    '<div class="step-item"><div class="step-num">4</div><div class="step-line"></div><div class="step-content"><h4>Lengkapi Semua Data Profil</h4><p>Profil yang lengkap menunjukkan kredibilitas. Isi semua field termasuk data pekerjaan dan kontak darurat.</p><div class="step-img" style="background:#F3E8FF">\u{1F4DD}</div></div></div>'+
-    '<div class="step-item"><div class="step-num">5</div><div class="step-line"></div><div class="step-content"><h4>Hindari Pengajuan di Banyak Platform</h4><p>Terlalu banyak pengajuan pinjaman dalam waktu singkat bisa menurunkan skor kreditmu. Fokus pada satu platform.</p><div class="step-img" style="background:#FEE2E2">\u{26A0}\u{FE0F}</div></div></div>'+
-    '</div>';
+function literacyPageHTML(){ const l=cfg.literacy;
+  return '<div class="dpg-bar"><button class="dpg-back" data-act="back" aria-label="Kembali">'+ic.arrowL+'</button><span class="dpg-title">'+esc(l.pageTitle||l.title)+'</span><span class="dpg-ic">'+ic.report+'</span></div>'+
+    '<div class="dpg-body"><p class="dpg-ph">Halaman konten (dummy)</p></div>';
+}
+var LENDERS=[
+  {logo:"easycash.png", name:"Easycash", type:"Fintech lender", amt:"Rp50 jt", tenor:"3–6 bulan", rate:"0,3–9%"},
+  {logo:"akulaku.jpeg", name:"Akulaku", type:"Paylater", amt:"Rp15 jt", tenor:"1–15 bulan", rate:"0,9–2%"},
+  {logo:"jenius.png", name:"Jenius (BTPN/SMBC)", type:"Bank digital", amt:"Rp500 jt", tenor:"1–60 bulan", rate:"1,15–1,9%"},
+  {logo:"gopay.png", name:"GoPay Pinjam", type:"Fintech lender", amt:"Rp15 jt", tenor:"2–6 bulan", rate:"1,21–2,69%"},
+  {logo:"kreditpintar.png", name:"Kredit Pintar", type:"Fintech lender", amt:"Rp50 jt", tenor:"3–12 bulan", rate:"1,7–6,12%"},
+  {logo:"neopinjam.jpeg", name:"Neo Pinjam", type:"Bank digital", amt:"Rp100 jt", tenor:"1–12 bulan", rate:"1,8%"}
+];
+function lendersPageHTML(){
+  function card(x){
+    return '<div class="lp-card"><div class="lp-top"><img class="lp-logo" src="assets/'+x.logo+'" alt="" onerror="this.style.visibility=\'hidden\'"><div><div class="lp-name">'+esc(x.name)+'</div><div class="lp-type">'+esc(x.type)+'</div></div></div>'+
+      '<div class="lp-amtlbl">Pinjaman hingga</div><div class="lp-amt">'+esc(x.amt)+'</div>'+
+      '<div class="lp-row"><div class="lp-col tenor"><span class="lp-k">Tenor</span><span class="lp-v">'+esc(x.tenor)+'</span></div><div class="lp-col rate"><span class="lp-k">Bunga/bulan</span><span class="lp-v">'+esc(x.rate)+'</span></div><button class="lp-btn" data-act="toast" data-v="Lihat Detail '+esc(x.name)+'">Lihat Detail</button></div></div>';
+  }
+  return '<div class="lp-header"><button class="pg-back" data-act="back" aria-label="Kembali">'+ic.arrowL+'</button><span class="lp-htitle">Rekomendasi Pinjaman</span></div>'+
+    '<div class="lp-body"><h3 class="lp-h1">Temukan pilihan yang sesuai</h3><p class="lp-sub">Bandingkan pilihan pinjaman sesuai kebutuhan dan kemampuanmu.</p>'+
+    LENDERS.map(card).join("")+
+    '<p class="lp-foot">Informasi mengikuti data referensi. Cek ketentuan terbaru di aplikasi penyedia.</p></div>';
 }
 function riskDetailPageHTML(){ const c=cfg.riskprofile;
   function detailCard(label,desc,level){
@@ -736,7 +1025,7 @@ function render(){
   var inner="";
   if(ui.page){
     inner='<div class="ph-status"><span>&#x25BE; &#x25E2; &#x25AE;</span><span>12:30</span></div>'+
-      '<div class="ph-scroll" style="padding:0">'+pageHTML(ui.page)+'</div>';
+      '<div class="ph-scroll" style="padding:0;background:#fff">'+pageHTML(ui.page)+'</div>';
   } else {
     const body=cfg.order.filter(k=>cfg.show[k]).map(k=>{ const h=C[k](); return h?'<section class="el" data-el="'+k+'" data-name="'+NAMES[k]+'">'+h+'</section>':""; }).join("");
     inner='<div class="ph-status"><span>&#x25BE; &#x25E2; &#x25AE;</span><span>12:30</span></div>'+
@@ -750,20 +1039,35 @@ function render(){
   phone.classList.toggle("inspect",ui.inspect&&!ui.page);
   if(!ui.page){ const ns=phone.querySelector(".ph-scroll"); if(ns) ns.scrollTop=keep; }
   phone.querySelector(".mdl .btn")?.focus();
+  animateScore();
+}
+var scLast;
+function animateScore(){ const el=phone.querySelector(".sc-val"); if(!el) return;
+  const target=+el.dataset.score;
+  if(scLast===target){ el.textContent=target; return; }
+  scLast=target; var start=null, from=Math.round(target*0.4), dur=900;
+  function step(t){ if(start===null)start=t; var p=Math.min((t-start)/dur,1);
+    el.textContent=Math.round(from+(target-from)*(1-Math.pow(1-p,3)));
+    if(p<1) requestAnimationFrame(step); else el.textContent=target; }
+  requestAnimationFrame(step);
 }
 function updateSlider(){ const k=calc(), q=s=>phone.querySelector('[data-o="'+s+'"]');
   if(!q("amt")) return;
-  q("amt").textContent=rp(ui.amt*1e6); q("ten").textContent=ui.ten+" bulan"; q("cicilan").textContent=rp(k.cicilan);
+  q("amt").textContent=ui.amt+" Juta"; q("ten").textContent=ui.ten+" Bulan"; q("cicilan").textContent=rp(k.cicilan);
   if(q("pokok")){ q("pokok").textContent=rp(k.pokok); q("bunga").textContent=rp(k.bunga); q("total").textContent=rp(k.total); } }
 
 var toastT;
-phone.addEventListener("input",e=>{ const r=e.target.closest(".rng"); if(!r) return;
+phone.addEventListener("input",e=>{
+  const nm=e.target.closest(".pf-name"); if(nm){ ui.profileName=nm.value; const b=phone.querySelector(".kf-cta"); if(b) b.disabled=!nm.value.trim(); return; }
+  const r=e.target.closest(".rng"); if(!r) return;
   ui[r.dataset.k]=+r.value; r.style.setProperty("--pct",pct(+r.value,+r.min,+r.max)); updateSlider(); });
 phone.addEventListener("click",e=>{
-  if(ui.inspect){ const s=e.target.closest(".el"); if(s){ e.preventDefault(); openSection(s.dataset.el); return; } }
+  if(ui.inspect && !ui.page){ const s=e.target.closest(".el"); if(s){ e.preventDefault(); openSection(s.dataset.el); return; } }
+  const pt=e.target.closest(".perm-toggle"); if(pt){ cfg.actions.step3Done=true; save(); renderRight(); render(); return; }
+  const rt=e.target.closest('[data-act="rtoggle"]'); if(rt){ cfg.reminder.on=!cfg.reminder.on; save(); renderRight(); render(); return; }
   const tgl=e.target.closest(".act-toggle"); if(tgl){
     const idx=tgl.dataset.idx;
-    if(idx==="2"){ cfg.actions.step2On=!cfg.actions.step2On; save(); render(); return; }
+    if(idx==="1"){ cfg.actions.step1On=!cfg.actions.step1On; save(); renderRight(); render(); return; }
   }
   const a=e.target.closest("[data-act]"); if(!a) return;
   const act=a.dataset.act;
@@ -773,6 +1077,7 @@ phone.addEventListener("click",e=>{
   if(act==="tips") ui.tips=true;
   if(act==="page"){ ui.page=a.dataset.v||""; }
   if(act==="back"){ ui.page=""; }
+  if(act==="profilesave"){ const nm=phone.querySelector(".pf-name"); if(nm && !nm.value.trim()) return; ui.profileName=""; cfg.actions.step2Done=true; save(); renderRight(); ui.page=""; }
   if(act==="toast"){ ui.toast=a.dataset.v; clearTimeout(toastT); toastT=setTimeout(function(){ui.toast="";render();},1800); }
   render();
 });
